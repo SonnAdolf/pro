@@ -1,0 +1,2 @@
+﻿LINK : fatal error C1047: 对象或库文件“lib\sqlite3.lib”是使用比创建其他对象所用编译器旧的编译器创建的；请重新生成旧的对象和库
+LINK : fatal error LNK1257: 代码生成失败
