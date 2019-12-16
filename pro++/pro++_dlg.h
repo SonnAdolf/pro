@@ -1,9 +1,8 @@
-﻿
-// pro++_dlg.h: 头文件
+﻿// pro++_dlg.h: 头文件
 //
 
 #pragma once
-
+#include "pro_today_dlg.h"
 
 // CProPlusPlusDlg 对话框
 class CProPlusPlusDlg : public CDialogEx
@@ -30,4 +29,8 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void on_pro_today_btn_clicked();
+private:
+	CProTodayDlg m_pro_today_dlg;
 };

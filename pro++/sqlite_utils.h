@@ -14,7 +14,7 @@ extern char g_strDevSn[32];
 *  date  : 2018-08-07
 *  note  : close sqlite connection
 */
-int sqliteClose();
+int sqlite_close();
 
 
 /*
@@ -22,6 +22,15 @@ int sqliteClose();
 *  date  : 2018-08-07
 *  note  : connect to sqlite
 */
-int sqliteConn();
+int sqlite_conn();
+
+
+/*
+*  author: ÎÞÃû
+*  date  : 2018-08-07
+		   2018-12-21
+*  note  : create tables if not exists
+*/
+bool create_tables();
 
 

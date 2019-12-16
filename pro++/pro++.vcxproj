@@ -191,6 +191,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="pro++.h" />
     <ClInclude Include="pro++_dlg.h" />
+    <ClInclude Include="pro_today_dlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="skin_h.h" />
     <ClInclude Include="sqlite3.h" />
@@ -206,6 +207,7 @@
     </ClCompile>
     <ClCompile Include="pro++.cpp" />
     <ClCompile Include="pro++_dlg.cpp" />
+    <ClCompile Include="pro_today_dlg.cpp" />
     <ClCompile Include="sqlite_utils.cpp" />
   </ItemGroup>
   <ItemGroup>

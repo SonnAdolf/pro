@@ -42,6 +42,9 @@
     <ClInclude Include="sqlite_utils.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="pro_today_dlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pro++.cpp">
@@ -54,6 +57,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="sqlite_utils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="pro_today_dlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

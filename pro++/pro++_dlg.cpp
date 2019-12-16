@@ -8,6 +8,7 @@
 #include "pro++_dlg.h"
 #include "afxdialogex.h"
 #include "skin_h.h"
+#include "sqlite_utils.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -34,33 +35,42 @@ void CProPlusPlusDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CProPlusPlusDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_PRO_TODAY_BTN, &CProPlusPlusDlg::on_pro_today_btn_clicked)
 END_MESSAGE_MAP()
 
-
-// CProPlusPlusDlg 消息处理程序
 
 BOOL CProPlusPlusDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
-
-	// 设置此对话框的图标。  当应用程序主窗口不是对话框时，框架将自动
-	//  执行此操作
-	SetIcon(m_hIcon, TRUE);			// 设置大图标
-	SetIcon(m_hIcon, FALSE);		// 设置小图标
+	SetIcon(m_hIcon, TRUE);			
+	SetIcon(m_hIcon, FALSE);		
 
 	SkinH_Attach();
+	sqlite_conn();
+	create_tables();
 
-	// TODO: 在此添加额外的初始化代码
+	m_pro_today_dlg.Create(CProTodayDlg::IDD,this);
 
-	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
+	return TRUE; 
 }
 
-//  如果向对话框添加最小化按钮，则需要下面的代码
-//  来绘制该图标。  对于使用文档/视图模型的 MFC 应用程序，
-//  这将由框架自动完成。
 
 void CProPlusPlusDlg::OnPaint()
 {
+	CImage image;
+	CWnd* pWnd;
+	pWnd = GetDlgItem(IDC_PIC_STATIC);
+	CDC* pDC = pWnd->GetDC();
+	HDC hDC = pDC->m_hDC;
+	CRect rect_frame;
+	pWnd->GetClientRect(&rect_frame);
+	image.Load(L"pics\\Kafka.jpg");
+	::SetStretchBltMode(hDC, HALFTONE);
+	::SetBrushOrgEx(hDC, 0, 0, NULL);
+	image.Draw(hDC, rect_frame);
+	ReleaseDC(pDC);
+	image.Destroy();
+
 	if (IsIconic())
 	{
 		CPaintDC dc(this); // 用于绘制的设备上下文
@@ -91,3 +101,10 @@ HCURSOR CProPlusPlusDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CProPlusPlusDlg::on_pro_today_btn_clicked()
+{
+	this->m_pro_today_dlg.ShowWindow(SW_SHOW);
+	return;
+}
