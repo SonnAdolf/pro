@@ -39,3 +39,7 @@ bool create_tables();
 bool add_pro_today(CPro pro);
 
 
+bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro_sum, 
+	float* const art_learning_pro_sum, float* const total_pro_sum, const int year, const int month);
+
+

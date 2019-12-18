@@ -72,3 +72,30 @@ bool add_pro_today(CPro pro) {
 }
 
 
+bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro_sum, 
+	float* const art_learning_pro_sum, float* const total_pro_sum, const int year, const int month) {
+	using namespace std;
+	char year_buf[15];
+	char month_buf[15];
+	_itoa(year,year_buf,10);
+	_itoa(month,month_buf,10);
+	string sql = "select sum(writing_pro),sum(reading_pro),sum(art_learning_pro),sum(total_pro) from pro where strftime('%Y-%m',date)='";
+	sql.append(year_buf).append("-").append(month_buf).append("';");
+
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(pDB, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return false;
+	}
+	int nIndex = nCol;
+	*writing_pro_sum = atof(pResult[nIndex]);
+	*reading_pro_sum = atof(pResult[nIndex + 1]);
+	*art_learning_pro_sum = atof(pResult[nIndex + 2]);
+	*total_pro_sum = atof(pResult[nIndex + 3]);
+	return true;
+}
+
+
