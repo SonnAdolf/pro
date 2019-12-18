@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sqlite3.h"
+#include "str_utils.h"
 #include <iostream>
 #include <string>
 #include <list>
@@ -32,5 +33,8 @@ int sqlite_conn();
 *  note  : create tables if not exists
 */
 bool create_tables();
+
+
+bool add_pro_today(wchar_t* writing_pro, wchar_t* reading_pro, wchar_t* art_learning_pro, wchar_t* note);
 
 
