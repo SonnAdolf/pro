@@ -6,6 +6,7 @@
 #include <string>
 #include <list>
 #include <algorithm>
+#include "pro.h"
 
 extern char g_strDevSn[32];
 
@@ -35,6 +36,6 @@ int sqlite_conn();
 bool create_tables();
 
 
-bool add_pro_today(wchar_t* writing_pro, wchar_t* reading_pro, wchar_t* art_learning_pro, wchar_t* note);
+bool add_pro_today(CPro pro);
 
 

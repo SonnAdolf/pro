@@ -29,4 +29,5 @@ private:
 	CEdit m_pro_reading_edit;
 	CEdit m_pro_writing_edit;
 	CEdit m_note_edit;
+	CDateTimeCtrl m_date_ctrl;
 };

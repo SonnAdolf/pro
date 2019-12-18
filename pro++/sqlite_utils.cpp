@@ -47,18 +47,15 @@ bool create_tables() {
 }
 
 
-bool add_pro_today(wchar_t* writing_pro, wchar_t* reading_pro, wchar_t* art_learning_pro, wchar_t* note) {
+bool add_pro_today(CPro pro) {
 	using namespace std;
 	time_t t = time(0);
 	wchar_t ch_time[20];
 	wcsftime(ch_time, sizeof(ch_time)/2, L"%Y-%m-%d", localtime(&t));
-	float total = static_cast<float>(_wtof(writing_pro)+_wtof(reading_pro)+_wtof(art_learning_pro));
-	wchar_t total_num_buf[6];
-	swprintf(total_num_buf, L"%.2f", total);
 
 	wstring sql = L"INSERT INTO pro(writing_pro, reading_pro, art_learning_pro, total_pro,note,date) VALUES ('";
-	sql.append(writing_pro).append(L"','").append(reading_pro).append(L"','").append(art_learning_pro);
-	sql.append(L"','").append(total_num_buf).append(L"','").append(note).append(L"','").append(ch_time).append(L"');");
+	sql.append(pro.get_writing_pro_str()).append(L"','").append(pro.get_reading_pro_str()).append(L"','").append(pro.get_art_learning_pro_str());
+	sql.append(L"','").append(pro.get_total_pro_str()).append(L"','").append(pro.get_note()).append(L"','").append(ch_time).append(L"');");
 
 	std::string str_sql;
 	wchar_to_string(str_sql, sql.c_str());

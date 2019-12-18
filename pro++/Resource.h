@@ -16,6 +16,9 @@
 #define IDC_PRO_ART_LEARNING_EDIT       1009
 #define IDC_INPT_TODAY_PRO_BTN          1010
 #define IDC_NOTE_EDIT                   1011
+#define IDC_MONTHCALENDAR1              1012
+#define IDC_DATETIMEPICKER1             1013
+#define IDC_MSCHART1                    1014
 
 // Next default values for new objects
 // 
@@ -23,7 +26,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        132
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1012
+#define _APS_NEXT_CONTROL_VALUE         1015
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
