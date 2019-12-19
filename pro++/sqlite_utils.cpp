@@ -91,10 +91,10 @@ bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro
 		return false;
 	}
 	int nIndex = nCol;
-	*writing_pro_sum = atof(pResult[nIndex]);
-	*reading_pro_sum = atof(pResult[nIndex + 1]);
-	*art_learning_pro_sum = atof(pResult[nIndex + 2]);
-	*total_pro_sum = atof(pResult[nIndex + 3]);
+	*writing_pro_sum = static_cast<float>(atof(pResult[nIndex]));
+	*reading_pro_sum = static_cast<float>(atof(pResult[nIndex + 1]));
+	*art_learning_pro_sum = static_cast<float>(atof(pResult[nIndex + 2]));
+	*total_pro_sum = static_cast<float>(atof(pResult[nIndex + 3]));
 	return true;
 }
 

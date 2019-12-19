@@ -36,6 +36,8 @@ BEGIN_MESSAGE_MAP(CProPlusPlusDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_PRO_TODAY_BTN, &CProPlusPlusDlg::on_pro_today_btn_clicked)
+	ON_BN_CLICKED(IDC_BUTTON2, &CProPlusPlusDlg::on_pro_search_btn_clicked)
+	ON_BN_CLICKED(IDC_BUTTON3, &CProPlusPlusDlg::on_pro_statistics_btn_clicked)
 END_MESSAGE_MAP()
 
 
@@ -50,6 +52,8 @@ BOOL CProPlusPlusDlg::OnInitDialog()
 	create_tables();
 
 	m_pro_today_dlg.Create(CProTodayDlg::IDD,this);
+	m_pro_search_dlg.Create(CProSearchDlg::IDD, this);
+	m_pro_statistics_dlg.Create(CProStatisticsDlg::IDD, this);
 
 	return TRUE; 
 }
@@ -106,5 +110,19 @@ HCURSOR CProPlusPlusDlg::OnQueryDragIcon()
 void CProPlusPlusDlg::on_pro_today_btn_clicked()
 {
 	this->m_pro_today_dlg.ShowWindow(SW_SHOW);
+	return;
+}
+
+
+void CProPlusPlusDlg::on_pro_search_btn_clicked()
+{
+	this->m_pro_search_dlg.ShowWindow(SW_SHOW);
+	return;
+}
+
+
+void CProPlusPlusDlg::on_pro_statistics_btn_clicked()
+{
+	this->m_pro_statistics_dlg.ShowWindow(SW_SHOW);
 	return;
 }

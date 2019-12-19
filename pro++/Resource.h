@@ -5,6 +5,8 @@
 #define IDD_PRO_DIALOG                  102
 #define IDR_MAINFRAME                   128
 #define IDD_PRO_TODAY_DIALOG            130
+#define IDD_PRO_STATISTICS_DIALOG       132
+#define IDD_PRO_SEARCH_DIALOG           134
 #define IDC_CHECK1                      1001
 #define IDC_PRO_TODAY_BTN               1002
 #define IDC_BUTTON2                     1003
@@ -18,13 +20,12 @@
 #define IDC_NOTE_EDIT                   1011
 #define IDC_MONTHCALENDAR1              1012
 #define IDC_DATETIMEPICKER1             1013
-#define IDC_MSCHART1                    1014
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        132
+#define _APS_NEXT_RESOURCE_VALUE        136
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1015
 #define _APS_NEXT_SYMED_VALUE           101

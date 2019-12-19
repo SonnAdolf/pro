@@ -60,18 +60,30 @@ BEGIN_MESSAGE_MAP(CProTodayDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
-
-
 void CProTodayDlg::on_clicked_inpt_today_pro_btn()
 {
-	wchar_t buf1[6],buf2[6],buf3[6],buf4[201];
+	wchar_t buf1[6], buf2[6], buf3[6];
+	wchar_t* buf4 = new wchar_t[402];
 
 	m_pro_writing_edit.GetWindowTextW(buf1,5);
 	m_pro_reading_edit.GetWindowTextW(buf2, 5);
 	m_pro_art_learning_edit.GetWindowTextW(buf3, 5);
-	m_note_edit.GetWindowTextW(buf4, 200);
+	m_note_edit.GetWindowTextW(buf4, 401);
 
 	CPro pro(buf1,buf2,buf3,buf4);
+
+	if (pro.get_note().length() > 400)
+	{
+		MessageBox(L"备注过长", L"提示");
+		return;
+	}
+	if (pro.get_total_pro() > 16)
+	{
+		MessageBox(L"能干16小时以上？别扯淡", L"提示");
+		return;
+	}
 	add_pro_today(pro);
+	MessageBox(L"pro++ yeah", L"提示");
+	delete[] buf4;
 	return;
 }

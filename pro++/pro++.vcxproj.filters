@@ -51,6 +51,12 @@
     <ClInclude Include="pro.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="pro_statistics_dlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="pro_search_dlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pro++.cpp">
@@ -72,6 +78,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="pro.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="pro_statistics_dlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="pro_search_dlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
