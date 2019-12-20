@@ -23,4 +23,11 @@ protected:
 
 public:
 	afx_msg void on_pro_search_btn_clicked();
+private:
+	CEdit m_pro_writing_search_edit;
+	CEdit m_pro_reading_search_edit;
+	CDateTimeCtrl m_pro_search_date_ctrl;
+	CEdit m_pro_art_learn_search_edit;
+	CEdit m_pro_total_search_edit;
+	CEdit m_pro_note_search_edit;
 };

@@ -151,6 +151,59 @@ bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro
 }
 
 
+bool get_pro_sum_by_year(float* const writing_pro_sum, float* const reading_pro_sum,
+	float* const art_learning_pro_sum, float* const total_pro_sum, const int year) {
+	using namespace std;
+	char year_buf[15];
+	_itoa(year, year_buf, 10);
+	string sql = "select sum(writing_pro),sum(reading_pro),sum(art_learning_pro),sum(total_pro) from pro where strftime('%Y',date)='";
+	sql.append(year_buf).append("';");
+
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(pDB, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return false;
+	}
+	int nIndex = nCol;
+	if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
+	{
+		*writing_pro_sum = 0;
+	}
+	else
+	{
+		*writing_pro_sum = static_cast<float>(atof(pResult[nIndex]));
+	}
+	if (pResult[nIndex + 1] == NULL || strcmp(pResult[nIndex + 1], "") == 0)
+	{
+		*reading_pro_sum = 0;
+	}
+	else
+	{
+		*reading_pro_sum = static_cast<float>(atof(pResult[nIndex + 1]));
+	}
+	if (pResult[nIndex + 2] == NULL || strcmp(pResult[nIndex + 2], "") == 0)
+	{
+		*art_learning_pro_sum = 0;
+	}
+	else
+	{
+		*art_learning_pro_sum = static_cast<float>(atof(pResult[nIndex + 2]));
+	}
+	if (pResult[nIndex + 3] == NULL || strcmp(pResult[nIndex + 3], "") == 0)
+	{
+		*total_pro_sum = 0;
+	}
+	else
+	{
+		*total_pro_sum = static_cast<float>(atof(pResult[nIndex + 3]));
+	}
+	return true;
+}
+
+
 bool check_if_pro_of_date_exist(std::wstring date) {
 	using namespace std;
 	wstring sql = L"select count(*) from pro where strftime('%Y/%m/%d',date)='";
@@ -172,4 +225,62 @@ bool check_if_pro_of_date_exist(std::wstring date) {
 	return false;
 }
 
+
+bool get_pro(std::wstring date, CPro* pro) {
+	using namespace std;
+	wstring sql = L"select writing_pro,reading_pro,art_learning_pro,note from pro where strftime('%Y/%m/%d',date)='";
+	sql.append(date).append(L"';");
+	string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(pDB, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return false;
+	}
+	int nIndex = nCol;
+	float writing_pro_num, reading_pro_num, art_learning_pro_num = 0.0;
+	if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
+	{
+		writing_pro_num = 0;
+	}
+	else
+	{
+		writing_pro_num = static_cast<float>(atof(pResult[nIndex]));
+	}
+	if (pResult[nIndex + 1] == NULL || strcmp(pResult[nIndex + 1], "") == 0)
+	{
+		reading_pro_num = 0;
+	}
+	else
+	{
+		reading_pro_num = static_cast<float>(atof(pResult[nIndex + 1]));
+	}
+	if (pResult[nIndex + 2] == NULL || strcmp(pResult[nIndex + 2], "") == 0)
+	{
+		art_learning_pro_num = 0;
+	}
+	else
+	{
+		art_learning_pro_num = static_cast<float>(atof(pResult[nIndex + 2]));
+	}
+	string str_note;
+	if (pResult[nIndex + 3] == NULL || strcmp(pResult[nIndex + 3], "") == 0)
+	{
+		str_note = "";
+	}
+	else
+	{
+		str_note = pResult[nIndex + 3];
+		str_note = utf8_2_ascii(str_note);
+	}
+	wstring wstr_note;
+	string_to_wstring(wstr_note, str_note);
+	CPro new_pro(writing_pro_num, reading_pro_num, art_learning_pro_num, wstr_note);
+	//Ç³¿½±´¼´¿É
+	*pro = new_pro;
+	return true;
+}
 

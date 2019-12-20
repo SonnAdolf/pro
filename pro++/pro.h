@@ -5,6 +5,7 @@
 class CPro
 {
 public:
+	CPro();
 	CPro(float writing_pro, float art_learning_pro, float reading_pro, std::wstring note);
 	CPro(std::wstring writing_pro, std::wstring art_learning_pro, std::wstring reading_pro, std::wstring note);
 	float get_writing_pro();

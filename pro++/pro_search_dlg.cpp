@@ -46,6 +46,12 @@ BOOL CProSearchDlg::OnInitDialog()
 void CProSearchDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_PRO_WRITING_SEARCH_EDIT, m_pro_writing_search_edit);
+	DDX_Control(pDX, IDC_PRO_READING_SEARCH_EDIT, m_pro_reading_search_edit);
+	DDX_Control(pDX, IDC_PRO_SEARCH_DATE, m_pro_search_date_ctrl);
+	DDX_Control(pDX, IDC_PRO_ART_LEARN_SEARCH_EDIT, m_pro_art_learn_search_edit);
+	DDX_Control(pDX, IDC_PRO_TOTAL_SEARCH_EDIT, m_pro_total_search_edit);
+	DDX_Control(pDX, IDC_NOTE_SEARCH_EDIT, m_pro_note_search_edit);
 }
 
 
@@ -59,5 +65,13 @@ END_MESSAGE_MAP()
 
 void CProSearchDlg::on_pro_search_btn_clicked()
 {
-	// TODO: 在此添加控件通知处理程序代码
+	wchar_t buf[12];
+	m_pro_search_date_ctrl.GetWindowTextW(buf, 12);
+	CPro pro;
+	get_pro(buf,&pro);
+	this->m_pro_art_learn_search_edit.SetWindowTextW(pro.get_art_learning_pro_str().c_str());
+	this->m_pro_reading_search_edit.SetWindowTextW(pro.get_reading_pro_str().c_str());
+	this->m_pro_total_search_edit.SetWindowTextW(pro.get_total_pro_str().c_str());
+	this->m_pro_writing_search_edit.SetWindowTextW(pro.get_writing_pro_str().c_str());
+	this->m_pro_note_search_edit.SetWindowTextW(pro.get_note().c_str());
 }

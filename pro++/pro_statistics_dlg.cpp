@@ -66,7 +66,16 @@ BOOL CProStatisticsDlg::OnInitDialog()
 			month_num = this_month;
 		}
 		_itow(i, wz_temp, 10);
-		pro_sum_info.append(wz_temp).append(L"年:").append(L"\r\n");
+		pro_sum_info.append(wz_temp).append(L"年:");
+		get_pro_sum_by_year(&tmp_writing_pro_sum, &tmp_reading_pro_sum, &tmp_art_learning_pro_sum, &tmp_total_pro_sum, i);
+		swprintf_s(wz_temp, L"%.2f", tmp_writing_pro_sum);
+		pro_sum_info.append(L"小说写作Pro总值为:").append(wz_temp).append(L"   ").append(L"阅读调研Pro总值为:");
+		swprintf_s(wz_temp, L"%.2f", tmp_reading_pro_sum);
+		pro_sum_info.append(wz_temp).append(L"   ").append(L"艺术学习Pro总值为:");
+		swprintf_s(wz_temp, L"%.2f", tmp_art_learning_pro_sum);
+		pro_sum_info.append(wz_temp).append(L"   ").append(L"Pro总值为:");
+		swprintf_s(wz_temp, L"%.2f", tmp_total_pro_sum);
+		pro_sum_info.append(wz_temp).append(L"\r\n");
 		for (j = 1; j <= month_num; j++)
 		{
 			_itow(j, wz_temp, 10);

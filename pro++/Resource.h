@@ -23,10 +23,16 @@
 #define IDC_PRO_STATISTICS_EDIT         1015
 #define IDC_PRO_SEARCH_BTN              1016
 #define IDC_EDIT1                       1017
+#define IDC_PRO_WRITING_SEARCH_EDIT     1017
 #define IDC_EDIT2                       1018
+#define IDC_PRO_READING_SEARCH_EDIT     1018
 #define IDC_EDIT3                       1019
+#define IDC_PRO_ART_LEARN_SEARCH_EDIT   1019
 #define IDC_EDIT5                       1021
+#define IDC_NOTE_SEARCH_EDIT            1021
 #define IDC_EDIT4                       1022
+#define IDC_PRO_TOTAL_SEARCH_EDIT       1022
+#define IDC_PRO_SEARCH_DATE             1023
 
 // Next default values for new objects
 // 
@@ -34,7 +40,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        136
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1023
+#define _APS_NEXT_CONTROL_VALUE         1024
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

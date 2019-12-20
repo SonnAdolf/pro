@@ -15,6 +15,17 @@ void wchar_to_string(std::string& src_dst, const wchar_t* dst_wchar) {
 }
 
 
+// string to wstring  
+void string_to_wstring(std::wstring& szDst, const std::string str) {
+	unsigned int len = MultiByteToWideChar(CP_ACP, 0, (LPCSTR)str.c_str(), -1, NULL, 0);
+	wchar_t* wsz_utf8 = new wchar_t[len + 1];
+	memset(wsz_utf8, 0, len * 2 + 2);
+	MultiByteToWideChar(CP_ACP, 0, (LPCSTR)str.c_str(), -1, (LPWSTR)wsz_utf8, len);
+	szDst = wsz_utf8;
+	delete[] wsz_utf8;
+}
+
+
 //UTF-8תUnicode 
 std::wstring Utf82Unicode(const std::string& utf8string)
 {
@@ -61,7 +72,7 @@ std::string WideByte2Acsi(std::wstring& wstrcode)
 
 
 //utf-8 ת ascii 
-std::string UTF_82ASCII(std::string& strUtf8Code)
+std::string utf8_2_ascii(std::string& strUtf8Code)
 {
 	using namespace std;
 	string strRet = "";

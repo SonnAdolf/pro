@@ -1,5 +1,9 @@
 #include "pro.h"
 
+CPro::CPro()
+{
+}
+
 CPro::CPro(float writing_pro, float art_learning_pro, float reading_pro, std::wstring note)
 {
 	this->m_art_learning_pro = art_learning_pro;
