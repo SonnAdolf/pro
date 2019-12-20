@@ -72,6 +72,30 @@ bool add_pro_today(CPro pro) {
 }
 
 
+bool update_pro(CPro pro, std::wstring date) {
+	using namespace std;
+
+	wstring sql = L"update pro set writing_pro='";
+	sql.append(pro.get_writing_pro_str()).append(L"',reading_pro='").append(pro.get_reading_pro_str()).append(L"',art_learning_pro='")
+		.append(pro.get_art_learning_pro_str()).append(L"',total_pro='").append(pro.get_total_pro_str()).append(L"',note='").append(pro.get_note()).append(L"' where strftime('%Y/%m/%d',date)='");
+	sql.append(date);
+	sql.append(L"';");
+
+	string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	// sqlite使用utf-8编码，汉字需要转
+	string str_utf8_sql = ascii_2_utf8(str_sql);
+
+	char* errmsg;
+	if (sqlite3_exec(pDB, str_utf8_sql.c_str(), NULL, NULL, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : insert data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return false;
+	}
+	return true;
+}
+
+
 bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro_sum, 
 	float* const art_learning_pro_sum, float* const total_pro_sum, const int year, const int month) {
 	using namespace std;
@@ -91,11 +115,61 @@ bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro
 		return false;
 	}
 	int nIndex = nCol;
-	*writing_pro_sum = static_cast<float>(atof(pResult[nIndex]));
-	*reading_pro_sum = static_cast<float>(atof(pResult[nIndex + 1]));
-	*art_learning_pro_sum = static_cast<float>(atof(pResult[nIndex + 2]));
-	*total_pro_sum = static_cast<float>(atof(pResult[nIndex + 3]));
+	if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
+	{
+		*writing_pro_sum = 0;
+	}
+	else 
+	{
+		*writing_pro_sum = static_cast<float>(atof(pResult[nIndex]));
+	}
+	if (pResult[nIndex+1] == NULL || strcmp(pResult[nIndex+1], "") == 0)
+	{
+		*reading_pro_sum = 0;
+	}
+	else
+	{
+		*reading_pro_sum = static_cast<float>(atof(pResult[nIndex + 1]));
+	}
+	if (pResult[nIndex + 2] == NULL || strcmp(pResult[nIndex + 2], "") == 0)
+	{
+		*art_learning_pro_sum = 0;
+	}
+	else 
+	{
+		*art_learning_pro_sum = static_cast<float>(atof(pResult[nIndex + 2]));
+	}
+	if (pResult[nIndex + 3] == NULL || strcmp(pResult[nIndex + 3], "") == 0)
+	{
+		*total_pro_sum = 0;
+	}
+	else
+	{
+		*total_pro_sum = static_cast<float>(atof(pResult[nIndex + 3]));
+	}
 	return true;
+}
+
+
+bool check_if_pro_of_date_exist(std::wstring date) {
+	using namespace std;
+	wstring sql = L"select count(*) from pro where strftime('%Y/%m/%d',date)='";
+	sql.append(date);
+	sql.append(L"';");
+	std::string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(pDB, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return false;
+	}
+	int nIndex = nCol;
+	if (atoi(pResult[nIndex]) > 0)
+		return true;
+	return false;
 }
 
 

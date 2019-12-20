@@ -21,4 +21,6 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 
+public:
+	afx_msg void on_pro_search_btn_clicked();
 };

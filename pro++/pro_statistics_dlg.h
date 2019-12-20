@@ -21,4 +21,6 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 
+private:
+	CEdit m_pro_statistics_edit;
 };

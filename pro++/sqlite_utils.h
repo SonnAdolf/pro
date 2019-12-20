@@ -43,3 +43,9 @@ bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro
 	float* const art_learning_pro_sum, float* const total_pro_sum, const int year, const int month);
 
 
+bool check_if_pro_of_date_exist(std::wstring date);
+
+
+bool update_pro(CPro pro, std::wstring date);
+
+

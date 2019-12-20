@@ -20,6 +20,13 @@
 #define IDC_NOTE_EDIT                   1011
 #define IDC_MONTHCALENDAR1              1012
 #define IDC_DATETIMEPICKER1             1013
+#define IDC_PRO_STATISTICS_EDIT         1015
+#define IDC_PRO_SEARCH_BTN              1016
+#define IDC_EDIT1                       1017
+#define IDC_EDIT2                       1018
+#define IDC_EDIT3                       1019
+#define IDC_EDIT5                       1021
+#define IDC_EDIT4                       1022
 
 // Next default values for new objects
 // 
@@ -27,7 +34,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        136
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1015
+#define _APS_NEXT_CONTROL_VALUE         1023
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

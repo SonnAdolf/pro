@@ -64,11 +64,13 @@ void CProTodayDlg::on_clicked_inpt_today_pro_btn()
 {
 	wchar_t buf1[6], buf2[6], buf3[6];
 	wchar_t* buf4 = new wchar_t[402];
+	wchar_t buf5[12];
 
 	m_pro_writing_edit.GetWindowTextW(buf1,5);
 	m_pro_reading_edit.GetWindowTextW(buf2, 5);
 	m_pro_art_learning_edit.GetWindowTextW(buf3, 5);
 	m_note_edit.GetWindowTextW(buf4, 401);
+	m_date_ctrl.GetWindowTextW(buf5, 12);
 
 	CPro pro(buf1,buf2,buf3,buf4);
 
@@ -82,7 +84,14 @@ void CProTodayDlg::on_clicked_inpt_today_pro_btn()
 		MessageBox(L"能干16小时以上？别扯淡", L"提示");
 		return;
 	}
-	add_pro_today(pro);
+	if (!check_if_pro_of_date_exist(buf5))
+	{
+		add_pro_today(pro);
+	}
+	else
+	{
+		update_pro(pro, buf5);
+	}
 	MessageBox(L"pro++ yeah", L"提示");
 	delete[] buf4;
 	return;

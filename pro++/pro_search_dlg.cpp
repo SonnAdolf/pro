@@ -51,6 +51,13 @@ void CProSearchDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CProSearchDlg, CDialogEx)
 	ON_WM_PAINT()
+	ON_BN_CLICKED(IDC_PRO_SEARCH_BTN, &CProSearchDlg::on_pro_search_btn_clicked)
 END_MESSAGE_MAP()
 
 
+
+
+void CProSearchDlg::on_pro_search_btn_clicked()
+{
+	// TODO: 在此添加控件通知处理程序代码
+}
