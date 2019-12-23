@@ -298,6 +298,8 @@ bool get_pro(std::wstring date, CPro* pro) {
 		sqlite3_free(errmsg);
 		return false;
 	}
+	if (nRow == 0 || nCol == 0)
+		return false;
 	int nIndex = nCol;
 	float writing_pro_num, reading_pro_num, art_learning_pro_num = 0.0;
 	if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
