@@ -86,7 +86,7 @@ void CProTodayDlg::on_clicked_inpt_today_pro_btn()
 	}
 	if (!check_if_pro_of_date_exist(buf5))
 	{
-		add_pro_today(pro);
+		add_pro(pro, buf5);
 	}
 	else
 	{

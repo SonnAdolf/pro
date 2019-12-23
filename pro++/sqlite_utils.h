@@ -36,7 +36,7 @@ int sqlite_conn();
 bool create_tables();
 
 
-bool add_pro_today(CPro pro);
+bool add_pro(CPro pro, std::wstring date);
 
 
 bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro_sum, 
@@ -54,5 +54,10 @@ bool update_pro(CPro pro, std::wstring date);
 
 
 bool get_pro(std::wstring date, CPro* pro);
+
+
+bool get_pro_sum(float* const writing_pro_sum, float* const reading_pro_sum,
+	float* const art_learning_pro_sum, float* const total_pro_sum);
+
 
 

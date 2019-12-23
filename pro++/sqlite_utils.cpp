@@ -47,15 +47,23 @@ bool create_tables() {
 }
 
 
-bool add_pro_today(CPro pro) {
+bool add_pro(CPro pro, std::wstring date) {
 	using namespace std;
-	time_t t = time(0);
-	wchar_t ch_time[20];
-	wcsftime(ch_time, sizeof(ch_time)/2, L"%Y-%m-%d", localtime(&t));
+	//time_t t = time(0);
+	//wchar_t ch_time[20];
+	//wcsftime(ch_time, sizeof(ch_time)/2, L"%Y-%m-%d", localtime(&t));
+
+	int pos;
+	pos = date.find(L"/");
+	while (pos != -1) {
+		// str.length()求字符的长度，注意str必须是string类型
+		date.replace(pos, wstring(L"/").length(), L"-");
+		pos = date.find(L"/");
+	}
 
 	wstring sql = L"INSERT INTO pro(writing_pro, reading_pro, art_learning_pro, total_pro,note,date) VALUES ('";
 	sql.append(pro.get_writing_pro_str()).append(L"','").append(pro.get_reading_pro_str()).append(L"','").append(pro.get_art_learning_pro_str());
-	sql.append(L"','").append(pro.get_total_pro_str()).append(L"','").append(pro.get_note()).append(L"','").append(ch_time).append(L"');");
+	sql.append(L"','").append(pro.get_total_pro_str()).append(L"','").append(pro.get_note()).append(L"','").append(date).append(L"');");
 
 	std::string str_sql;
 	wchar_to_string(str_sql, sql.c_str());
@@ -158,6 +166,56 @@ bool get_pro_sum_by_year(float* const writing_pro_sum, float* const reading_pro_
 	_itoa(year, year_buf, 10);
 	string sql = "select sum(writing_pro),sum(reading_pro),sum(art_learning_pro),sum(total_pro) from pro where strftime('%Y',date)='";
 	sql.append(year_buf).append("';");
+
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(pDB, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return false;
+	}
+	int nIndex = nCol;
+	if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
+	{
+		*writing_pro_sum = 0;
+	}
+	else
+	{
+		*writing_pro_sum = static_cast<float>(atof(pResult[nIndex]));
+	}
+	if (pResult[nIndex + 1] == NULL || strcmp(pResult[nIndex + 1], "") == 0)
+	{
+		*reading_pro_sum = 0;
+	}
+	else
+	{
+		*reading_pro_sum = static_cast<float>(atof(pResult[nIndex + 1]));
+	}
+	if (pResult[nIndex + 2] == NULL || strcmp(pResult[nIndex + 2], "") == 0)
+	{
+		*art_learning_pro_sum = 0;
+	}
+	else
+	{
+		*art_learning_pro_sum = static_cast<float>(atof(pResult[nIndex + 2]));
+	}
+	if (pResult[nIndex + 3] == NULL || strcmp(pResult[nIndex + 3], "") == 0)
+	{
+		*total_pro_sum = 0;
+	}
+	else
+	{
+		*total_pro_sum = static_cast<float>(atof(pResult[nIndex + 3]));
+	}
+	return true;
+}
+
+
+bool get_pro_sum(float* const writing_pro_sum, float* const reading_pro_sum,
+	float* const art_learning_pro_sum, float* const total_pro_sum) {
+	using namespace std;
+	string sql = "select sum(writing_pro),sum(reading_pro),sum(art_learning_pro),sum(total_pro) from pro;";
 
 	char* errmsg;
 	char** pResult;

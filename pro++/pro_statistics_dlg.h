@@ -22,5 +22,8 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
+	void statitics();
 	CEdit m_pro_statistics_edit;
+public:
+	afx_msg void on_refresh_btn_clicked();
 };

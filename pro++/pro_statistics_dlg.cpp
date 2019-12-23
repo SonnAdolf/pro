@@ -40,6 +40,20 @@ BOOL CProStatisticsDlg::OnInitDialog()
 	/*设置小图标*/
 	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), FALSE);
 
+	statitics();
+
+	return TRUE;
+}
+
+
+void CProStatisticsDlg::DoDataExchange(CDataExchange* pDX)
+{
+	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_PRO_STATISTICS_EDIT, m_pro_statistics_edit);
+}
+
+void CProStatisticsDlg::statitics()
+{
 	time_t timep;
 	struct tm* p;
 	time(&timep);
@@ -50,9 +64,9 @@ BOOL CProStatisticsDlg::OnInitDialog()
 	int this_month = 1 + p->tm_mon;
 	int month_num;
 
-	int i,j = 0;
+	int i, j = 0;
 	float tmp_writing_pro_sum, tmp_reading_pro_sum,
-		  tmp_art_learning_pro_sum, tmp_total_pro_sum=0;
+		tmp_art_learning_pro_sum, tmp_total_pro_sum = 0;
 
 	std::wstring pro_sum_info;
 	wchar_t wz_temp[20] = { 0 };
@@ -65,18 +79,12 @@ BOOL CProStatisticsDlg::OnInitDialog()
 		{
 			month_num = this_month;
 		}
-		_itow(i, wz_temp, 10);
-		pro_sum_info.append(wz_temp).append(L"年:");
-		get_pro_sum_by_year(&tmp_writing_pro_sum, &tmp_reading_pro_sum, &tmp_art_learning_pro_sum, &tmp_total_pro_sum, i);
-		swprintf_s(wz_temp, L"%.2f", tmp_writing_pro_sum);
-		pro_sum_info.append(L"小说写作Pro总值为:").append(wz_temp).append(L"   ").append(L"阅读调研Pro总值为:");
-		swprintf_s(wz_temp, L"%.2f", tmp_reading_pro_sum);
-		pro_sum_info.append(wz_temp).append(L"   ").append(L"艺术学习Pro总值为:");
-		swprintf_s(wz_temp, L"%.2f", tmp_art_learning_pro_sum);
-		pro_sum_info.append(wz_temp).append(L"   ").append(L"Pro总值为:");
-		swprintf_s(wz_temp, L"%.2f", tmp_total_pro_sum);
-		pro_sum_info.append(wz_temp).append(L"\r\n");
-		for (j = 1; j <= month_num; j++)
+
+		j = 1;
+		if (i == 2019)
+			j = 12;
+
+		for (; j <= month_num; j++)
 		{
 			_itow(j, wz_temp, 10);
 			pro_sum_info.append(wz_temp).append(L"月:  ");
@@ -90,23 +98,44 @@ BOOL CProStatisticsDlg::OnInitDialog()
 			swprintf_s(wz_temp, L"%.2f", tmp_total_pro_sum);
 			pro_sum_info.append(wz_temp).append(L"\r\n");
 		}
+		pro_sum_info.append(L"----------------------\r\n");
+		_itow(i, wz_temp, 10);
+		pro_sum_info.append(wz_temp).append(L"年:");
+		get_pro_sum_by_year(&tmp_writing_pro_sum, &tmp_reading_pro_sum, &tmp_art_learning_pro_sum, &tmp_total_pro_sum, i);
+		swprintf_s(wz_temp, L"%.2f", tmp_writing_pro_sum);
+		pro_sum_info.append(L"小说写作Pro总值为:").append(wz_temp).append(L"   ").append(L"阅读调研Pro总值为:");
+		swprintf_s(wz_temp, L"%.2f", tmp_reading_pro_sum);
+		pro_sum_info.append(wz_temp).append(L"   ").append(L"艺术学习Pro总值为:");
+		swprintf_s(wz_temp, L"%.2f", tmp_art_learning_pro_sum);
+		pro_sum_info.append(wz_temp).append(L"   ").append(L"Pro总值为:");
+		swprintf_s(wz_temp, L"%.2f", tmp_total_pro_sum);
+		pro_sum_info.append(wz_temp).append(L"\r\n");
+
 		pro_sum_info.append(L"----------------------\r\n\r\n");
 	}
+	pro_sum_info.append(L"总计:");
+	get_pro_sum(&tmp_writing_pro_sum, &tmp_reading_pro_sum, &tmp_art_learning_pro_sum, &tmp_total_pro_sum);
+	swprintf_s(wz_temp, L"%.2f", tmp_writing_pro_sum);
+	pro_sum_info.append(L"小说写作Pro总值为:").append(wz_temp).append(L"   ").append(L"阅读调研Pro总值为:");
+	swprintf_s(wz_temp, L"%.2f", tmp_reading_pro_sum);
+	pro_sum_info.append(wz_temp).append(L"   ").append(L"艺术学习Pro总值为:");
+	swprintf_s(wz_temp, L"%.2f", tmp_art_learning_pro_sum);
+	pro_sum_info.append(wz_temp).append(L"   ").append(L"Pro总值为:");
+	swprintf_s(wz_temp, L"%.2f", tmp_total_pro_sum);
+	pro_sum_info.append(wz_temp).append(L"\r\n");
 	m_pro_statistics_edit.SetWindowTextW(pro_sum_info.c_str());
-
-	return TRUE;
-}
-
-
-void CProStatisticsDlg::DoDataExchange(CDataExchange* pDX)
-{
-	CDialogEx::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_PRO_STATISTICS_EDIT, m_pro_statistics_edit);
 }
 
 
 BEGIN_MESSAGE_MAP(CProStatisticsDlg, CDialogEx)
 	ON_WM_PAINT()
+	ON_BN_CLICKED(IDC_REFRESH_BTN, &CProStatisticsDlg::on_refresh_btn_clicked)
 END_MESSAGE_MAP()
 
 
+
+
+void CProStatisticsDlg::on_refresh_btn_clicked()
+{
+	statitics();
+}
