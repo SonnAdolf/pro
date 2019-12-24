@@ -72,7 +72,7 @@ void CProTodayDlg::on_clicked_inpt_today_pro_btn()
 	m_note_edit.GetWindowTextW(buf4, 401);
 	m_date_ctrl.GetWindowTextW(buf5, 12);
 
-	CPro pro(buf1,buf2,buf3,buf4);
+	CPro pro(buf1,buf3,buf2,buf4);
 
 	if (pro.get_note().length() > 400)
 	{

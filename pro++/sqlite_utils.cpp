@@ -338,7 +338,7 @@ bool get_pro(std::wstring date, CPro* pro) {
 	}
 	wstring wstr_note;
 	string_to_wstring(wstr_note, str_note);
-	CPro new_pro(writing_pro_num, reading_pro_num, art_learning_pro_num, wstr_note);
+	CPro new_pro(writing_pro_num, art_learning_pro_num,reading_pro_num, wstr_note);
 	//Ç³¿½±´¼´¿É
 	*pro = new_pro;
 	return true;
