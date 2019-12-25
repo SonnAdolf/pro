@@ -59,5 +59,11 @@ bool get_pro(std::wstring date, CPro* pro);
 bool get_pro_sum(float* const writing_pro_sum, float* const reading_pro_sum,
 	float* const art_learning_pro_sum, float* const total_pro_sum);
 
+bool count_pro_by_month(int* const num, const int year, const int month);
+
+bool count_pro_by_year(int* const num, const int year);
+
+bool count_pro(int* const num);
+
 
 

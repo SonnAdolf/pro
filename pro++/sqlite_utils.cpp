@@ -49,10 +49,6 @@ bool create_tables() {
 
 bool add_pro(CPro pro, std::wstring date) {
 	using namespace std;
-	//time_t t = time(0);
-	//wchar_t ch_time[20];
-	//wcsftime(ch_time, sizeof(ch_time)/2, L"%Y-%m-%d", localtime(&t));
-
 	int pos;
 	pos = date.find(L"/");
 	while (pos != -1) {
@@ -82,7 +78,6 @@ bool add_pro(CPro pro, std::wstring date) {
 
 bool update_pro(CPro pro, std::wstring date) {
 	using namespace std;
-
 	wstring sql = L"update pro set writing_pro='";
 	sql.append(pro.get_writing_pro_str()).append(L"',reading_pro='").append(pro.get_reading_pro_str()).append(L"',art_learning_pro='")
 		.append(pro.get_art_learning_pro_str()).append(L"',total_pro='").append(pro.get_total_pro_str()).append(L"',note='").append(pro.get_note()).append(L"' where strftime('%Y/%m/%d',date)='");
@@ -344,3 +339,85 @@ bool get_pro(std::wstring date, CPro* pro) {
 	return true;
 }
 
+
+bool count_pro_by_month(int* const num, const int year, const int month) {
+	using namespace std;
+	char year_buf[15];
+	char month_buf[15];
+	_itoa(year, year_buf, 10);
+	_itoa(month, month_buf, 10);
+	string sql = "select count(*) from pro where strftime('%Y-%m',date)='";
+	sql.append(year_buf).append("-").append(month_buf).append("';");
+
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(pDB, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return false;
+	}
+	int nIndex = nCol;
+	if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
+	{
+		*num = 0;
+	}
+	else
+	{
+		*num = static_cast<float>(atoi(pResult[nIndex]));
+	}
+	return true;
+}
+
+
+bool count_pro_by_year(int* const num, const int year) {
+	using namespace std;
+	char year_buf[15];
+	_itoa(year, year_buf, 10);
+	string sql = "select count(*) from pro where strftime('%Y',date)='";
+	sql.append(year_buf).append("';");
+
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(pDB, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return false;
+	}
+	int nIndex = nCol;
+	if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
+	{
+		*num = 0;
+	}
+	else
+	{
+		*num = static_cast<float>(atoi(pResult[nIndex]));
+	}
+	return true;
+}
+
+
+bool count_pro(int* const num) {
+	using namespace std;
+	string sql = "select count(*) from pro;";
+
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(pDB, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return false;
+	}
+	int nIndex = nCol;
+	if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
+	{
+		*num = 0;
+	}
+	else
+	{
+		*num = static_cast<float>(atoi(pResult[nIndex]));
+	}
+	return true;
+}
