@@ -39,6 +39,7 @@ BOOL CProTodayDlg::OnInitDialog()
 	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), TRUE);
 	/*ÉèÖÃÐ¡Í¼±ê*/
 	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), FALSE);
+	m_date_ctrl.SetFormat(L"yyyy-MM-dd");
 	return TRUE;
 }
 

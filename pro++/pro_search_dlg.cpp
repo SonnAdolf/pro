@@ -39,6 +39,7 @@ BOOL CProSearchDlg::OnInitDialog()
 	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), TRUE);
 	/*ÉèÖÃÐ¡Í¼±ê*/
 	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), FALSE);
+	m_pro_search_date_ctrl.SetFormat(L"yyyy-MM-dd");
 	return TRUE;
 }
 

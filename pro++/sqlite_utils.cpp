@@ -104,8 +104,17 @@ bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro
 	using namespace std;
 	char year_buf[15];
 	char month_buf[15];
+	if (month < 10)
+	{
+		month_buf[0] = '0';
+		_itoa(month, month_buf+1, 10);
+	}
+	else
+	{
+		_itoa(month, month_buf, 10);
+	}
 	_itoa(year,year_buf,10);
-	_itoa(month,month_buf,10);
+
 	string sql = "select sum(writing_pro),sum(reading_pro),sum(art_learning_pro),sum(total_pro) from pro where strftime('%Y-%m',date)='";
 	sql.append(year_buf).append("-").append(month_buf).append("';");
 
@@ -259,7 +268,7 @@ bool get_pro_sum(float* const writing_pro_sum, float* const reading_pro_sum,
 
 bool check_if_pro_of_date_exist(std::wstring date) {
 	using namespace std;
-	wstring sql = L"select count(*) from pro where strftime('%Y/%m/%d',date)='";
+	wstring sql = L"select count(*) from pro where date='";
 	sql.append(date);
 	sql.append(L"';");
 	std::string str_sql;
@@ -281,7 +290,7 @@ bool check_if_pro_of_date_exist(std::wstring date) {
 
 bool get_pro(std::wstring date, CPro* pro) {
 	using namespace std;
-	wstring sql = L"select writing_pro,reading_pro,art_learning_pro,note from pro where strftime('%Y/%m/%d',date)='";
+	wstring sql = L"select writing_pro,reading_pro,art_learning_pro,note from pro where date='";
 	sql.append(date).append(L"';");
 	string str_sql;
 	wchar_to_string(str_sql, sql.c_str());
@@ -345,7 +354,15 @@ bool count_pro_by_month(int* const num, const int year, const int month) {
 	char year_buf[15];
 	char month_buf[15];
 	_itoa(year, year_buf, 10);
-	_itoa(month, month_buf, 10);
+	if (month < 10)
+	{
+		month_buf[0] = '0';
+		_itoa(month, month_buf + 1, 10);
+	}
+	else
+	{
+		_itoa(month, month_buf, 10);
+	}
 	string sql = "select count(*) from pro where strftime('%Y-%m',date)='";
 	sql.append(year_buf).append("-").append(month_buf).append("';");
 
