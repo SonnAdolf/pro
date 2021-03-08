@@ -38,7 +38,7 @@ int sqlite_conn() {
 bool create_tables() {
 	using namespace std;
 	//id,writing_pro,reading_pro,art_learning_pro,total_pro,note,str_date,date
-	string str_sql = "CREATE TABLE IF NOT EXISTS  pro(id integer  primary key autoincrement,writing_pro integer,reading_pro integer,art_learning_pro integer,total_pro integer,note varchar(500),date date NOT NULL); ";
+	string str_sql = "CREATE TABLE IF NOT EXISTS  pro(id integer  primary key autoincrement,writing_pro integer,reading_pro integer,art_learning_pro integer,computer_science_tech_pro integer,total_pro integer,note varchar(500),date date NOT NULL); ";
 	char* cErrMsg;
 	int nRes = sqlite3_exec(pDB, str_sql.c_str(), 0, 0, &cErrMsg);
 	if (nRes != SQLITE_OK)
@@ -57,9 +57,10 @@ bool add_pro(CPro pro, std::wstring date) {
 		pos = date.find(L"/");
 	}
 
-	wstring sql = L"INSERT INTO pro(writing_pro, reading_pro, art_learning_pro, total_pro,note,date) VALUES ('";
+	wstring sql = L"INSERT INTO pro(writing_pro, reading_pro, art_learning_pro, computer_science_tech_pro, total_pro, note, date) VALUES ('";
 	sql.append(pro.get_writing_pro_str()).append(L"','").append(pro.get_reading_pro_str()).append(L"','").append(pro.get_art_learning_pro_str());
-	sql.append(L"','").append(pro.get_total_pro_str()).append(L"','").append(pro.get_note()).append(L"','").append(date).append(L"');");
+	sql.append(L"','").append(pro.get_computer_learning_pro_str()).append(L"','").append(pro.get_total_pro_str()).append(L"','");
+	sql.append(pro.get_note()).append(L"','").append(date).append(L"');");
 
 	std::string str_sql;
 	wchar_to_string(str_sql, sql.c_str());
@@ -80,7 +81,9 @@ bool update_pro(CPro pro, std::wstring date) {
 	using namespace std;
 	wstring sql = L"update pro set writing_pro='";
 	sql.append(pro.get_writing_pro_str()).append(L"',reading_pro='").append(pro.get_reading_pro_str()).append(L"',art_learning_pro='")
-		.append(pro.get_art_learning_pro_str()).append(L"',total_pro='").append(pro.get_total_pro_str()).append(L"',note='").append(pro.get_note()).append(L"' where strftime('%Y/%m/%d',date)='");
+		.append(pro.get_art_learning_pro_str()).append(L"',computer_science_tech_pro='")
+		.append(pro.get_computer_learning_pro_str()).append(L"',total_pro='").append(pro.get_total_pro_str()).append(L"',note='")
+		.append(pro.get_note()).append(L"' where date='");
 	sql.append(date);
 	sql.append(L"';");
 
@@ -100,7 +103,7 @@ bool update_pro(CPro pro, std::wstring date) {
 
 
 bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro_sum, 
-	float* const art_learning_pro_sum, float* const total_pro_sum, const int year, const int month) {
+	float* const art_learning_pro_sum, float* const computer_learning_pro_sum, float* const total_pro_sum, const int year, const int month) {
 	using namespace std;
 	char year_buf[15];
 	char month_buf[15];
@@ -115,7 +118,7 @@ bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro
 	}
 	_itoa(year,year_buf,10);
 
-	string sql = "select sum(writing_pro),sum(reading_pro),sum(art_learning_pro),sum(total_pro) from pro where strftime('%Y-%m',date)='";
+	string sql = "select sum(writing_pro),sum(reading_pro),sum(art_learning_pro),sum(computer_science_tech_pro),sum(total_pro) from pro where strftime('%Y-%m',date)='";
 	sql.append(year_buf).append("-").append(month_buf).append("';");
 
 	char* errmsg;
@@ -153,22 +156,30 @@ bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro
 	}
 	if (pResult[nIndex + 3] == NULL || strcmp(pResult[nIndex + 3], "") == 0)
 	{
+		*computer_learning_pro_sum = 0;
+	}
+	else
+	{
+		*computer_learning_pro_sum = static_cast<float>(atof(pResult[nIndex + 3]));
+	}
+	if (pResult[nIndex + 4] == NULL || strcmp(pResult[nIndex + 4], "") == 0)
+	{
 		*total_pro_sum = 0;
 	}
 	else
 	{
-		*total_pro_sum = static_cast<float>(atof(pResult[nIndex + 3]));
+		*total_pro_sum = static_cast<float>(atof(pResult[nIndex + 4]));
 	}
 	return true;
 }
 
 
 bool get_pro_sum_by_year(float* const writing_pro_sum, float* const reading_pro_sum,
-	float* const art_learning_pro_sum, float* const total_pro_sum, const int year) {
+	float* const art_learning_pro_sum, float* const computer_learning_pro, float* const total_pro_sum, const int year) {
 	using namespace std;
 	char year_buf[15];
 	_itoa(year, year_buf, 10);
-	string sql = "select sum(writing_pro),sum(reading_pro),sum(art_learning_pro),sum(total_pro) from pro where strftime('%Y',date)='";
+	string sql = "select sum(writing_pro),sum(reading_pro),sum(art_learning_pro),sum(computer_science_tech_pro),sum(total_pro) from pro where strftime('%Y',date)='";
 	sql.append(year_buf).append("';");
 
 	char* errmsg;
@@ -206,20 +217,28 @@ bool get_pro_sum_by_year(float* const writing_pro_sum, float* const reading_pro_
 	}
 	if (pResult[nIndex + 3] == NULL || strcmp(pResult[nIndex + 3], "") == 0)
 	{
+		*computer_learning_pro = 0;
+	}
+	else
+	{
+		*computer_learning_pro = static_cast<float>(atof(pResult[nIndex + 3]));
+	}
+	if (pResult[nIndex + 4] == NULL || strcmp(pResult[nIndex + 4], "") == 0)
+	{
 		*total_pro_sum = 0;
 	}
 	else
 	{
-		*total_pro_sum = static_cast<float>(atof(pResult[nIndex + 3]));
+		*total_pro_sum = static_cast<float>(atof(pResult[nIndex + 4]));
 	}
 	return true;
 }
 
 
 bool get_pro_sum(float* const writing_pro_sum, float* const reading_pro_sum,
-	float* const art_learning_pro_sum, float* const total_pro_sum) {
+	float* const art_learning_pro_sum, float* const computer_learning_pro, float* const total_pro_sum) {
 	using namespace std;
-	string sql = "select sum(writing_pro),sum(reading_pro),sum(art_learning_pro),sum(total_pro) from pro;";
+	string sql = "select sum(writing_pro),sum(reading_pro),sum(art_learning_pro),sum(computer_science_tech_pro),sum(total_pro) from pro;";
 
 	char* errmsg;
 	char** pResult;
@@ -256,11 +275,19 @@ bool get_pro_sum(float* const writing_pro_sum, float* const reading_pro_sum,
 	}
 	if (pResult[nIndex + 3] == NULL || strcmp(pResult[nIndex + 3], "") == 0)
 	{
+		*computer_learning_pro = 0;
+	}
+	else
+	{
+		*computer_learning_pro = static_cast<float>(atof(pResult[nIndex + 3]));
+	}
+	if (pResult[nIndex + 4] == NULL || strcmp(pResult[nIndex + 4], "") == 0)
+	{
 		*total_pro_sum = 0;
 	}
 	else
 	{
-		*total_pro_sum = static_cast<float>(atof(pResult[nIndex + 3]));
+		*total_pro_sum = static_cast<float>(atof(pResult[nIndex + 4]));
 	}
 	return true;
 }
@@ -290,7 +317,7 @@ bool check_if_pro_of_date_exist(std::wstring date) {
 
 bool get_pro(std::wstring date, CPro* pro) {
 	using namespace std;
-	wstring sql = L"select writing_pro,reading_pro,art_learning_pro,note from pro where date='";
+	wstring sql = L"select writing_pro,reading_pro,art_learning_pro,computer_science_tech_pro,note from pro where date='";
 	sql.append(date).append(L"';");
 	string str_sql;
 	wchar_to_string(str_sql, sql.c_str());
@@ -305,7 +332,7 @@ bool get_pro(std::wstring date, CPro* pro) {
 	if (nRow == 0 || nCol == 0)
 		return false;
 	int nIndex = nCol;
-	float writing_pro_num, reading_pro_num, art_learning_pro_num = 0.0;
+	float writing_pro_num, reading_pro_num, art_learning_pro_num, computer_pro_num = 0.0;
 	if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
 	{
 		writing_pro_num = 0;
@@ -330,19 +357,27 @@ bool get_pro(std::wstring date, CPro* pro) {
 	{
 		art_learning_pro_num = static_cast<float>(atof(pResult[nIndex + 2]));
 	}
-	string str_note;
 	if (pResult[nIndex + 3] == NULL || strcmp(pResult[nIndex + 3], "") == 0)
+	{
+		computer_pro_num = 0;
+	}
+	else
+	{
+		computer_pro_num = static_cast<float>(atof(pResult[nIndex + 3]));
+	}
+	string str_note;
+	if (pResult[nIndex + 4] == NULL || strcmp(pResult[nIndex + 4], "") == 0)
 	{
 		str_note = "";
 	}
 	else
 	{
-		str_note = pResult[nIndex + 3];
+		str_note = pResult[nIndex + 4];
 		str_note = utf8_2_ascii(str_note);
 	}
 	wstring wstr_note;
 	string_to_wstring(wstr_note, str_note);
-	CPro new_pro(writing_pro_num, art_learning_pro_num,reading_pro_num, wstr_note);
+	CPro new_pro(writing_pro_num, art_learning_pro_num,reading_pro_num, computer_pro_num,wstr_note);
 	//Ç³¿½±´¼´¿É
 	*pro = new_pro;
 	return true;

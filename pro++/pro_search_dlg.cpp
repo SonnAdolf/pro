@@ -10,6 +10,7 @@
 ///   
 ///  
 ///  修订说明：  
+///           2021-03-08 添加計算機科學與技術研究相關時間管理
 ////////////////////////////////////////////////////////////////////////// 
 #include "pch.h"
 #include "pro_search_dlg.h"
@@ -53,6 +54,7 @@ void CProSearchDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_PRO_ART_LEARN_SEARCH_EDIT, m_pro_art_learn_search_edit);
 	DDX_Control(pDX, IDC_PRO_TOTAL_SEARCH_EDIT, m_pro_total_search_edit);
 	DDX_Control(pDX, IDC_NOTE_SEARCH_EDIT, m_pro_note_search_edit);
+	DDX_Control(pDX, IDC_PRO_COMPUTER_LEARN_SEARCH_EDIT, m_pro_computer_learn_search_edit);
 }
 
 
@@ -75,4 +77,5 @@ void CProSearchDlg::on_pro_search_btn_clicked()
 	this->m_pro_total_search_edit.SetWindowTextW(pro.get_total_pro_str().c_str());
 	this->m_pro_writing_search_edit.SetWindowTextW(pro.get_writing_pro_str().c_str());
 	this->m_pro_note_search_edit.SetWindowTextW(pro.get_note().c_str());
+	this->m_pro_computer_learn_search_edit.SetWindowTextW(pro.get_computer_learning_pro_str().c_str());
 }

@@ -30,4 +30,5 @@ private:
 	CEdit m_pro_art_learn_search_edit;
 	CEdit m_pro_total_search_edit;
 	CEdit m_pro_note_search_edit;
+	CEdit m_pro_computer_learn_search_edit;
 };

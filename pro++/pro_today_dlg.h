@@ -30,4 +30,5 @@ private:
 	CEdit m_pro_writing_edit;
 	CEdit m_note_edit;
 	CDateTimeCtrl m_date_ctrl;
+	CEdit m_pro_computer_edit;
 };
