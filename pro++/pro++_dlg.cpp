@@ -48,8 +48,8 @@ BOOL CProPlusPlusDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		
 
 	SkinH_Attach();
-	sqlite_conn();
-	create_tables();
+	CSqliteUtils::get_inst().sqlite_conn();
+	CSqliteUtils::get_inst().create_tables();
 
 	m_pro_today_dlg.Create(CProTodayDlg::IDD,this);
 	m_pro_search_dlg.Create(CProSearchDlg::IDD, this);

@@ -88,13 +88,13 @@ void CProTodayDlg::on_clicked_inpt_today_pro_btn()
 		MessageBox(L"能工作16小時以上？別扯淡", L"提示");
 		return;
 	}
-	if (!check_if_pro_of_date_exist(buf6))
+	if (!CSqliteUtils::get_inst().check_if_pro_of_date_exist(buf6))
 	{
-		add_pro(pro, buf6);
+		CSqliteUtils::get_inst().add_pro(pro, buf6);
 	}
 	else
 	{
-		update_pro(pro, buf6);
+		CSqliteUtils::get_inst().update_pro(pro, buf6);
 	}
 	MessageBox(L"pro++ yeah", L"提示");
 	delete[] buf5;

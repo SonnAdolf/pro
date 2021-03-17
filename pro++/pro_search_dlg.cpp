@@ -71,7 +71,7 @@ void CProSearchDlg::on_pro_search_btn_clicked()
 	wchar_t buf[12];
 	m_pro_search_date_ctrl.GetWindowTextW(buf, 12);
 	CPro pro;
-	get_pro(buf,&pro);
+	CSqliteUtils::get_inst().get_pro(buf,&pro);
 	this->m_pro_art_learn_search_edit.SetWindowTextW(pro.get_art_learning_pro_str().c_str());
 	this->m_pro_reading_search_edit.SetWindowTextW(pro.get_reading_pro_str().c_str());
 	this->m_pro_total_search_edit.SetWindowTextW(pro.get_total_pro_str().c_str());

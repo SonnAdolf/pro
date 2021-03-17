@@ -93,7 +93,7 @@ void CProStatisticsDlg::statitics()
 		{
 			_itow(j, wz_temp, 10);
 			pro_sum_info.append(wz_temp).append(L"月:  ");
-			get_pro_sum_by_month(&tmp_writing_pro_sum, &tmp_reading_pro_sum, &tmp_art_learning_pro_sum, &tmp_computer_learning_pro_sum, &tmp_total_pro_sum, i, j);
+			CSqliteUtils::get_inst().get_pro_sum_by_month(&tmp_writing_pro_sum, &tmp_reading_pro_sum, &tmp_art_learning_pro_sum, &tmp_computer_learning_pro_sum, &tmp_total_pro_sum, i, j);
 			swprintf_s(wz_temp, L"%.2f", tmp_writing_pro_sum);
 			pro_sum_info.append(L"寫作用時:").append(wz_temp).append(L"   ").append(L"閲讀調研用時:");
 			swprintf_s(wz_temp, L"%.2f", tmp_reading_pro_sum);
@@ -105,7 +105,7 @@ void CProStatisticsDlg::statitics()
 			swprintf_s(wz_temp, L"%.2f", tmp_total_pro_sum);
 			pro_sum_info.append(wz_temp);
 
-			count_pro_by_month(&tmp_day_num, i,j);
+			CSqliteUtils::get_inst().count_pro_by_month(&tmp_day_num, i,j);
 			day_num = tmp_day_num;
 			average_t_pro = tmp_total_pro_sum / day_num;
 			average_w_pro = tmp_writing_pro_sum / day_num;
@@ -127,7 +127,7 @@ void CProStatisticsDlg::statitics()
 		pro_sum_info.append(L"----------------------\r\n");
 		_itow(i, wz_temp, 10);
 		pro_sum_info.append(wz_temp).append(L"年:");
-		get_pro_sum_by_year(&tmp_writing_pro_sum, &tmp_reading_pro_sum, &tmp_art_learning_pro_sum, &tmp_computer_learning_pro_sum, &tmp_total_pro_sum, i);
+		CSqliteUtils::get_inst().get_pro_sum_by_year(&tmp_writing_pro_sum, &tmp_reading_pro_sum, &tmp_art_learning_pro_sum, &tmp_computer_learning_pro_sum, &tmp_total_pro_sum, i);
 		swprintf_s(wz_temp, L"%.2f", tmp_writing_pro_sum);
 		pro_sum_info.append(L"寫作用時:").append(wz_temp).append(L"   ").append(L"閲讀調研用時:");
 		swprintf_s(wz_temp, L"%.2f", tmp_reading_pro_sum);
@@ -139,7 +139,7 @@ void CProStatisticsDlg::statitics()
 		swprintf_s(wz_temp, L"%.2f", tmp_total_pro_sum);
 		pro_sum_info.append(wz_temp);
 
-		count_pro_by_year(&tmp_day_num,i);
+		CSqliteUtils::get_inst().count_pro_by_year(&tmp_day_num,i);
 		day_num = tmp_day_num;
 		average_t_pro = tmp_total_pro_sum / day_num;
 		average_w_pro = tmp_writing_pro_sum / day_num;
@@ -161,7 +161,7 @@ void CProStatisticsDlg::statitics()
 	}
 	//总计
 	pro_sum_info.append(L"總計:");
-	get_pro_sum(&tmp_writing_pro_sum, &tmp_reading_pro_sum, &tmp_art_learning_pro_sum, &tmp_computer_learning_pro_sum, &tmp_total_pro_sum);
+	CSqliteUtils::get_inst().get_pro_sum(&tmp_writing_pro_sum, &tmp_reading_pro_sum, &tmp_art_learning_pro_sum, &tmp_computer_learning_pro_sum, &tmp_total_pro_sum);
 	swprintf_s(wz_temp, L"%.2f", tmp_writing_pro_sum);
 	pro_sum_info.append(L"寫作用時:").append(wz_temp).append(L"   ").append(L"閲讀調研用時:");
 	swprintf_s(wz_temp, L"%.2f", tmp_reading_pro_sum);
@@ -173,7 +173,7 @@ void CProStatisticsDlg::statitics()
 	swprintf_s(wz_temp, L"%.2f", tmp_total_pro_sum);
 	pro_sum_info.append(wz_temp);
 
-	count_pro(&tmp_day_num);
+	CSqliteUtils::get_inst().count_pro(&tmp_day_num);
 	day_num = tmp_day_num;
 	average_t_pro = tmp_total_pro_sum / day_num;
 	average_w_pro = tmp_writing_pro_sum / day_num;

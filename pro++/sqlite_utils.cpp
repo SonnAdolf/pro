@@ -4,14 +4,13 @@
 
 #include "sqlite_utils.h"
 
-sqlite3* pDB = NULL;
 
 /*
  *  author: ÎÞÃû
  *  date  : 2018-08-07
  *  note  : close sqlite connection
  */
-int sqlite_close() {
+int CSqliteUtils::sqlite_close() {
 	sqlite3_close(pDB);
 	return 0;
 }
@@ -22,7 +21,7 @@ int sqlite_close() {
 *  date  : 2018-08-07
 *  note  : connect to sqlite
 */
-int sqlite_conn() {
+int CSqliteUtils::sqlite_conn() {
 	int nRes = sqlite3_open("data.db", &pDB);
 	if (nRes != SQLITE_OK)
 		return -1;
@@ -35,7 +34,7 @@ int sqlite_conn() {
 *  date  : 2019-12-18
 *  note  : create tables if not exists
 */
-bool create_tables() {
+bool CSqliteUtils::create_tables() {
 	using namespace std;
 	//id,writing_pro,reading_pro,art_learning_pro,total_pro,note,str_date,date
 	string str_sql = "CREATE TABLE IF NOT EXISTS  pro(id integer  primary key autoincrement,writing_pro integer,reading_pro integer,art_learning_pro integer,computer_science_tech_pro integer,total_pro integer,note varchar(500),date date NOT NULL); ";
@@ -47,7 +46,7 @@ bool create_tables() {
 }
 
 
-bool add_pro(CPro pro, std::wstring date) {
+bool CSqliteUtils::add_pro(CPro pro, std::wstring date) {
 	using namespace std;
 	int pos;
 	pos = date.find(L"/");
@@ -77,7 +76,7 @@ bool add_pro(CPro pro, std::wstring date) {
 }
 
 
-bool update_pro(CPro pro, std::wstring date) {
+bool CSqliteUtils::update_pro(CPro pro, std::wstring date) {
 	using namespace std;
 	wstring sql = L"update pro set writing_pro='";
 	sql.append(pro.get_writing_pro_str()).append(L"',reading_pro='").append(pro.get_reading_pro_str()).append(L"',art_learning_pro='")
@@ -102,7 +101,7 @@ bool update_pro(CPro pro, std::wstring date) {
 }
 
 
-bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro_sum, 
+bool CSqliteUtils::get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro_sum,
 	float* const art_learning_pro_sum, float* const computer_learning_pro_sum, float* const total_pro_sum, const int year, const int month) {
 	using namespace std;
 	char year_buf[15];
@@ -174,7 +173,7 @@ bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro
 }
 
 
-bool get_pro_sum_by_year(float* const writing_pro_sum, float* const reading_pro_sum,
+bool CSqliteUtils::get_pro_sum_by_year(float* const writing_pro_sum, float* const reading_pro_sum,
 	float* const art_learning_pro_sum, float* const computer_learning_pro, float* const total_pro_sum, const int year) {
 	using namespace std;
 	char year_buf[15];
@@ -235,7 +234,7 @@ bool get_pro_sum_by_year(float* const writing_pro_sum, float* const reading_pro_
 }
 
 
-bool get_pro_sum(float* const writing_pro_sum, float* const reading_pro_sum,
+bool CSqliteUtils::get_pro_sum(float* const writing_pro_sum, float* const reading_pro_sum,
 	float* const art_learning_pro_sum, float* const computer_learning_pro, float* const total_pro_sum) {
 	using namespace std;
 	string sql = "select sum(writing_pro),sum(reading_pro),sum(art_learning_pro),sum(computer_science_tech_pro),sum(total_pro) from pro;";
@@ -293,7 +292,7 @@ bool get_pro_sum(float* const writing_pro_sum, float* const reading_pro_sum,
 }
 
 
-bool check_if_pro_of_date_exist(std::wstring date) {
+bool CSqliteUtils::check_if_pro_of_date_exist(std::wstring date) {
 	using namespace std;
 	wstring sql = L"select count(*) from pro where date='";
 	sql.append(date);
@@ -315,7 +314,7 @@ bool check_if_pro_of_date_exist(std::wstring date) {
 }
 
 
-bool get_pro(std::wstring date, CPro* pro) {
+bool CSqliteUtils::get_pro(std::wstring date, CPro* pro) {
 	using namespace std;
 	wstring sql = L"select writing_pro,reading_pro,art_learning_pro,computer_science_tech_pro,note from pro where date='";
 	sql.append(date).append(L"';");
@@ -384,7 +383,7 @@ bool get_pro(std::wstring date, CPro* pro) {
 }
 
 
-bool count_pro_by_month(int* const num, const int year, const int month) {
+bool CSqliteUtils::count_pro_by_month(int* const num, const int year, const int month) {
 	using namespace std;
 	char year_buf[15];
 	char month_buf[15];
@@ -422,7 +421,7 @@ bool count_pro_by_month(int* const num, const int year, const int month) {
 }
 
 
-bool count_pro_by_year(int* const num, const int year) {
+bool CSqliteUtils::count_pro_by_year(int* const num, const int year) {
 	using namespace std;
 	char year_buf[15];
 	_itoa(year, year_buf, 10);
@@ -450,7 +449,7 @@ bool count_pro_by_year(int* const num, const int year) {
 }
 
 
-bool count_pro(int* const num) {
+bool CSqliteUtils::count_pro(int* const num) {
 	using namespace std;
 	string sql = "select count(*) from pro;";
 
