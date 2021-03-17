@@ -11,7 +11,7 @@
  *  note  : close sqlite connection
  */
 int CSqliteUtils::sqlite_close() {
-	sqlite3_close(pDB);
+	sqlite3_close(m_db);
 	return 0;
 }
 
@@ -22,7 +22,7 @@ int CSqliteUtils::sqlite_close() {
 *  note  : connect to sqlite
 */
 int CSqliteUtils::sqlite_conn() {
-	int nRes = sqlite3_open("data.db", &pDB);
+	int nRes = sqlite3_open("data.db", &m_db);
 	if (nRes != SQLITE_OK)
 		return -1;
 	return 0;
@@ -39,7 +39,7 @@ bool CSqliteUtils::create_tables() {
 	//id,writing_pro,reading_pro,art_learning_pro,total_pro,note,str_date,date
 	string str_sql = "CREATE TABLE IF NOT EXISTS  pro(id integer  primary key autoincrement,writing_pro integer,reading_pro integer,art_learning_pro integer,computer_science_tech_pro integer,total_pro integer,note varchar(500),date date NOT NULL); ";
 	char* cErrMsg;
-	int nRes = sqlite3_exec(pDB, str_sql.c_str(), 0, 0, &cErrMsg);
+	int nRes = sqlite3_exec(m_db, str_sql.c_str(), 0, 0, &cErrMsg);
 	if (nRes != SQLITE_OK)
 		return false;
 	return true;
@@ -67,7 +67,7 @@ bool CSqliteUtils::add_pro(CPro pro, std::wstring date) {
 	string str_utf8_sql = ascii_2_utf8(str_sql);
 
 	char* errmsg;
-	if (sqlite3_exec(pDB, str_utf8_sql.c_str(), NULL, NULL, &errmsg) != SQLITE_OK) {
+	if (sqlite3_exec(m_db, str_utf8_sql.c_str(), NULL, NULL, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : insert data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return false;
@@ -92,7 +92,7 @@ bool CSqliteUtils::update_pro(CPro pro, std::wstring date) {
 	string str_utf8_sql = ascii_2_utf8(str_sql);
 
 	char* errmsg;
-	if (sqlite3_exec(pDB, str_utf8_sql.c_str(), NULL, NULL, &errmsg) != SQLITE_OK) {
+	if (sqlite3_exec(m_db, str_utf8_sql.c_str(), NULL, NULL, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : insert data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return false;
@@ -123,7 +123,7 @@ bool CSqliteUtils::get_pro_sum_by_month(float* const writing_pro_sum, float* con
 	char* errmsg;
 	char** pResult;
 	int nRow, nCol;
-	if (sqlite3_get_table(pDB, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+	if (sqlite3_get_table(m_db, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : select data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return false;
@@ -184,7 +184,7 @@ bool CSqliteUtils::get_pro_sum_by_year(float* const writing_pro_sum, float* cons
 	char* errmsg;
 	char** pResult;
 	int nRow, nCol;
-	if (sqlite3_get_table(pDB, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+	if (sqlite3_get_table(m_db, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : select data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return false;
@@ -242,7 +242,7 @@ bool CSqliteUtils::get_pro_sum(float* const writing_pro_sum, float* const readin
 	char* errmsg;
 	char** pResult;
 	int nRow, nCol;
-	if (sqlite3_get_table(pDB, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+	if (sqlite3_get_table(m_db, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : select data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return false;
@@ -302,7 +302,7 @@ bool CSqliteUtils::check_if_pro_of_date_exist(std::wstring date) {
 	char* errmsg;
 	char** pResult;
 	int nRow, nCol;
-	if (sqlite3_get_table(pDB, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : select data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return false;
@@ -323,7 +323,7 @@ bool CSqliteUtils::get_pro(std::wstring date, CPro* pro) {
 	char* errmsg;
 	char** pResult;
 	int nRow, nCol;
-	if (sqlite3_get_table(pDB, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : select data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return false;
@@ -403,7 +403,7 @@ bool CSqliteUtils::count_pro_by_month(int* const num, const int year, const int 
 	char* errmsg;
 	char** pResult;
 	int nRow, nCol;
-	if (sqlite3_get_table(pDB, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+	if (sqlite3_get_table(m_db, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : select data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return false;
@@ -431,7 +431,7 @@ bool CSqliteUtils::count_pro_by_year(int* const num, const int year) {
 	char* errmsg;
 	char** pResult;
 	int nRow, nCol;
-	if (sqlite3_get_table(pDB, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+	if (sqlite3_get_table(m_db, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : select data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return false;
@@ -456,7 +456,7 @@ bool CSqliteUtils::count_pro(int* const num) {
 	char* errmsg;
 	char** pResult;
 	int nRow, nCol;
-	if (sqlite3_get_table(pDB, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+	if (sqlite3_get_table(m_db, sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : select data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return false;

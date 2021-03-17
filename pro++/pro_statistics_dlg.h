@@ -1,6 +1,7 @@
 #pragma once
 
 #include "resource.h"
+#include "pro_statistics_serv.h"
 
 // CProStatisticsDlg ¶Ô»°¿ò
 

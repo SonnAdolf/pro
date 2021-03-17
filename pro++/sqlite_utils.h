@@ -8,8 +8,6 @@
 #include <algorithm>
 #include "pro.h"
 
-extern char g_strDevSn[32];
-
 
 class CSqliteUtils {
 private:
@@ -76,5 +74,5 @@ public:
 
 	bool count_pro(int* const num);
 private:
-	sqlite3* pDB = NULL;
+	sqlite3* m_db = NULL;
 };
