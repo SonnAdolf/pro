@@ -1,3 +1,9 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+import sys
+
+reload(sys)
+sys.setdefaultencoding( "utf-8" )
 
 class pro:
     __writing_pro=0.00
@@ -32,3 +38,11 @@ class pro:
 
     def get_total_pro_str(self):
         return str(self.__total_pro)
+        
+    def print_self(self):
+        print('writing pro:'+str(self.__writing_pro)+'\n')
+        print('computer learning pro:'+str(self.__computer_learning_pro)+'\n')
+        print('reading pro:'+str(self.__reading_pro)+'\n')
+        print('art learning pro:'+str(self.__art_learning_pro)+'\n')
+        print('total pro:'+str(self.__total_pro)+'\n')
+        print('note:'+self.__note+'\n')

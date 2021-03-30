@@ -1,3 +1,9 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
+import sys
+reload(sys)
+sys.setdefaultencoding( "utf-8" )
+
 class cmd_caller():
     __order_list = []
     def take_order(self,in_order):
