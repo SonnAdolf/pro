@@ -24,4 +24,4 @@ class pro_search(order):
         if sel_pro != None:
             sel_pro.print_self()
         else:
-            print("got nothing")
+            print("Sorry,got nothing")

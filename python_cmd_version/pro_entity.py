@@ -14,11 +14,12 @@ class pro:
     __note = ''
 
     def __init__(self,writing_pro,art_learning_pro,reading_pro,computer_learning_pro,note):
-        self.__writing_pro = writing_pro
-        self.__art_learning_pro = art_learning_pro
-        self.__reading_pro = reading_pro
-        self.__computer_learning_pro = computer_learning_pro
+        self.__writing_pro = float(writing_pro)
+        self.__art_learning_pro = float(art_learning_pro)
+        self.__reading_pro = float(reading_pro)
+        self.__computer_learning_pro = float(computer_learning_pro)
         self.__note = note
+        self.__total_pro = 0.00
         self.__total_pro = self.__writing_pro+self.__art_learning_pro+self.__reading_pro+self.__computer_learning_pro
 
     def get_writing_pro_str(self):
@@ -40,9 +41,9 @@ class pro:
         return str(self.__total_pro)
         
     def print_self(self):
-        print('writing pro:'+str(self.__writing_pro)+'\n')
-        print('computer learning pro:'+str(self.__computer_learning_pro)+'\n')
-        print('reading pro:'+str(self.__reading_pro)+'\n')
-        print('art learning pro:'+str(self.__art_learning_pro)+'\n')
-        print('total pro:'+str(self.__total_pro)+'\n')
-        print('note:'+self.__note+'\n')
+        print('Writing pro:'+str(self.__writing_pro)+'\n')
+        print('Computer learning pro:'+str(self.__computer_learning_pro)+'\n')
+        print('Reading pro:'+str(self.__reading_pro)+'\n')
+        print('Art learning pro:'+str(self.__art_learning_pro)+'\n')
+        print('Total pro:'+str(self.__total_pro)+'\n')
+        print('Note:'+self.__note+'\n')

@@ -34,9 +34,13 @@ class pro_set(order):
 
     def __add_pro(self):
         #print date
+        print("Begin to add a pro of "+self.__date+" now...\n")
         db_utils = sqlite_utils()
         db_utils.add_pro(self.__pro,self.__date)
+        print("Add over.\n")
 
     def __update_pro(self):
+        print("Begin to update a pro of "+self.__date+" now...\n")
         db_utils = sqlite_utils()
         db_utils.update_pro(self.__pro,self.__date)
+        print("Update over.\n")
