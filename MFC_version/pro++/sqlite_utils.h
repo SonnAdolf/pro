@@ -20,6 +20,10 @@ public:
 		return instance;
 	}
 
+	CSqliteUtils(const CSqliteUtils&) = delete;
+
+	CSqliteUtils& operator=(const CSqliteUtils&) = delete;
+
 	/*
 	*  author: ÎÞÃû
 	*  date  : 2018-08-07
