@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>statistics_dlg</class>
  <widget class="QDialog" name="statistics_dlg">
@@ -10,9 +11,15 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>用時統計</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="pro++.qrc">
+    <normaloff>:/images/pro++.ico</normaloff>:/images/pro++.ico</iconset>
   </property>
  </widget>
- <resources/>
+ <resources>
+  <include location="pro++.qrc"/>
+ </resources>
  <connections/>
 </ui>

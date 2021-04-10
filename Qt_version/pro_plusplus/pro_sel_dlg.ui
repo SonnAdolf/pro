@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>用時查詢</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="pro++.qrc">
+    <normaloff>:/images/pro++.ico</normaloff>:/images/pro++.ico</iconset>
   </property>
   <widget class="QLabel" name="label_4">
    <property name="geometry">
@@ -167,6 +171,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="pro++.qrc"/>
+ </resources>
  <connections/>
 </ui>

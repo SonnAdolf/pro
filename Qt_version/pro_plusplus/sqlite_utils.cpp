@@ -92,7 +92,67 @@ bool sqlite_utils::update_pro(pro pro, QString date)
 }
 
 
-bool sqlite_utils::get_pro(QString date, pro* pro)
+bool sqlite_utils::get_pro(QString date, pro* selpro)
 {
-    return true;
+    float  writing_pro= 0;
+    float  reading_pro = 0;
+    float  art_learning_pro = 0;
+    float  computer_science_tech_pro = 0;
+    QString  note = "";
+    QString sql = "select writing_pro,reading_pro,art_learning_pro,computer_science_tech_pro,note from pro where date='";
+    sql.append(date).append("';");
+    qDebug() << sql;
+    QSqlQuery sql_query;
+    sql_query.prepare(sql);
+    if(!sql_query.exec())
+    {
+        return false;
+    }
+    if(sql_query.next())
+    {
+        if (sql_query.value(0) == NULL || sql_query.value(0).toString().compare("") == 0)
+        {
+            writing_pro = 0;
+        }
+        else
+        {
+            writing_pro = sql_query.value(0).toFloat();
+        }
+        if (sql_query.value(1) == NULL || sql_query.value(1).toString().compare("") == 0)
+        {
+            reading_pro = 0;
+        }
+        else
+        {
+            reading_pro = sql_query.value(1).toFloat();
+        }
+        if (sql_query.value(2) == NULL || sql_query.value(2).toString().compare("") == 0)
+        {
+            art_learning_pro = 0;
+        }
+        else
+        {
+            art_learning_pro = sql_query.value(2).toFloat();
+        }
+        if (sql_query.value(3) == NULL || sql_query.value(3).toString().compare("") == 0)
+        {
+            computer_science_tech_pro = 0;
+        }
+        else
+        {
+            computer_science_tech_pro = sql_query.value(3).toFloat();
+        }
+        if (sql_query.value(4) == NULL || sql_query.value(4).toString().compare("") == 0)
+        {
+            note = "";
+        }
+        else
+        {
+            note = sql_query.value(4).toString();
+        }
+        pro new_pro(writing_pro,reading_pro,art_learning_pro,computer_science_tech_pro,note);
+        *selpro = new_pro;
+        return true;
+    }
+    return false;
 }

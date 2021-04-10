@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>505</width>
-    <height>312</height>
+    <width>284</width>
+    <height>281</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,7 +21,7 @@
    <widget class="QPushButton" name="pro_inpt_btn">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>70</x>
       <y>40</y>
       <width>151</width>
       <height>31</height>
@@ -34,27 +34,27 @@
    <widget class="QPushButton" name="sel_pro">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>70</x>
       <y>110</y>
       <width>151</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>計算機與文學-用時查詢</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pro_statistics">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>70</x>
       <y>180</y>
       <width>151</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>計算機與文學-用時統計</string>
     </property>
    </widget>
   </widget>

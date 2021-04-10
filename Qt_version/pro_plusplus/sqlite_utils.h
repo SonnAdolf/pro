@@ -64,7 +64,7 @@ public:
     bool update_pro(pro pro, QString date);
 
 
-    bool get_pro(QString date, pro* pro);
+    bool get_pro(QString date, pro* selpro);
 
 
     bool get_pro_sum(float* const writing_pro_sum, float* const reading_pro_sum,
