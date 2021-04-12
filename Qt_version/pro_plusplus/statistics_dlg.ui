@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>922</width>
+    <height>568</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,6 +17,32 @@
    <iconset resource="pro++.qrc">
     <normaloff>:/images/pro++.ico</normaloff>:/images/pro++.ico</iconset>
   </property>
+  <widget class="QTextEdit" name="statistics_text">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>881</width>
+     <height>491</height>
+    </rect>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="restatistics_btn">
+   <property name="geometry">
+    <rect>
+     <x>820</x>
+     <y>530</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>統 計</string>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="pro++.qrc"/>

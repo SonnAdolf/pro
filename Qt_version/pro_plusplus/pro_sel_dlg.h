@@ -2,6 +2,7 @@
 #define PRO_SEL_DLG_H
 
 #include <QDialog>
+#include <QDate>
 #include "pro.h"
 #include "pro_sel_serv.h"
 

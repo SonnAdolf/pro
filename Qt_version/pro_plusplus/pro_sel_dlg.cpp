@@ -7,6 +7,8 @@ pro_sel_dlg::pro_sel_dlg(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->date_sel_edit->setDisplayFormat("yyyy-MM-dd");
+    QDate qdate;
+    ui->date_sel_edit->setDate(qdate.currentDate());
 }
 
 pro_sel_dlg::~pro_sel_dlg()

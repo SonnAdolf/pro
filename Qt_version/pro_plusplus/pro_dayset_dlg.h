@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QDialog>
+#include <QDate>
 
 #include "pro_dayset_serv.h"
 

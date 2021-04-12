@@ -156,3 +156,294 @@ bool sqlite_utils::get_pro(QString date, pro* selpro)
     }
     return false;
 }
+
+
+bool sqlite_utils::count_pro_by_month(int* const num, const int year, const int month)
+{
+    QString year_str = "";
+    QString month_str = "";
+    year_str = QString("%1").arg(year);
+    if (month < 10)
+    {
+        month_str = "0";
+        month_str.append(QString("%1").arg(month));
+    }
+    else
+    {
+        month_str = QString("%1").arg(month);
+    }
+    QString sql = "select count(*) from pro where strftime('%Y-%m',date)='";
+    sql.append(year_str).append("-").append(month_str).append("';");
+
+    qDebug() << sql;
+    QSqlQuery sql_query;
+    sql_query.prepare(sql);
+    if(!sql_query.exec())
+    {
+        return false;
+    }
+    if(sql_query.next())
+    {
+        if (sql_query.value(0) == NULL || sql_query.value(0).toString().compare("") == 0)
+        {
+            *num = 0;
+        }
+        else
+        {
+            *num = sql_query.value(0).toInt();
+        }
+        return true;
+    }
+    return false;
+}
+
+
+bool sqlite_utils::count_pro_by_year(int* const num, const int year) {
+    QString year_str = "";
+    year_str = QString("%1").arg(year);
+    QString sql = "select count(*) from pro where strftime('%Y',date)='";
+    sql.append(year_str).append("';");
+
+    qDebug() << sql;
+    QSqlQuery sql_query;
+    sql_query.prepare(sql);
+    if(!sql_query.exec())
+    {
+        return false;
+    }
+    if(sql_query.next())
+    {
+        if (sql_query.value(0) == NULL || sql_query.value(0).toString().compare("") == 0)
+        {
+            *num = 0;
+        }
+        else
+        {
+            *num = sql_query.value(0).toInt();
+        }
+        return true;
+    }
+    return false;
+}
+
+
+bool sqlite_utils::count_pro(int* const num) {
+    QString sql = "select count(*) from pro;";
+    qDebug() << sql;
+    QSqlQuery sql_query;
+    sql_query.prepare(sql);
+    if(!sql_query.exec())
+    {
+        return false;
+    }
+    if(sql_query.next())
+    {
+        if (sql_query.value(0) == NULL || sql_query.value(0).toString().compare("") == 0)
+        {
+            *num = 0;
+        }
+        else
+        {
+            *num = sql_query.value(0).toInt();
+        }
+        return true;
+    }
+    return false;
+}
+
+
+bool sqlite_utils::get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro_sum,
+    float* const art_learning_pro_sum, float* const computer_learning_pro_sum, float* const total_pro_sum, const int year, const int month) {
+    QString year_str = "";
+    QString month_str = "";
+    year_str = QString("%1").arg(year);
+    if (month < 10)
+    {
+        month_str = "0";
+        month_str.append(QString("%1").arg(month));
+    }
+    else
+    {
+        month_str = QString("%1").arg(month);
+    }
+
+    QString sql = "select sum(writing_pro),sum(reading_pro),sum(art_learning_pro),sum(computer_science_tech_pro),sum(total_pro) from pro where strftime('%Y-%m',date)='";
+    sql.append(year_str).append("-").append(month_str).append("';");
+
+    qDebug() << sql;
+    QSqlQuery sql_query;
+    sql_query.prepare(sql);
+    if(!sql_query.exec())
+    {
+        return false;
+    }
+    if(sql_query.next())
+    {
+        if (sql_query.value(0) == NULL || sql_query.value(0).toString().compare("") == 0)
+        {
+            *writing_pro_sum = 0;
+        }
+        else
+        {
+            *writing_pro_sum = sql_query.value(0).toFloat();
+        }
+        if (sql_query.value(1) == NULL || sql_query.value(1).toString().compare("") == 0)
+        {
+            *reading_pro_sum = 0;
+        }
+        else
+        {
+            *reading_pro_sum = sql_query.value(1).toFloat();
+        }
+        if (sql_query.value(2) == NULL || sql_query.value(2).toString().compare("") == 0)
+        {
+            *art_learning_pro_sum = 0;
+        }
+        else
+        {
+            *art_learning_pro_sum = sql_query.value(2).toFloat();
+        }
+        if (sql_query.value(3) == NULL || sql_query.value(3).toString().compare("") == 0)
+        {
+            *computer_learning_pro_sum = 0;
+        }
+        else
+        {
+            *computer_learning_pro_sum = sql_query.value(3).toFloat();
+        }
+        if (sql_query.value(4) == NULL || sql_query.value(4).toString().compare("") == 0)
+        {
+            *total_pro_sum = 0;
+        }
+        else
+        {
+            *total_pro_sum = sql_query.value(4).toFloat();
+        }
+        return true;
+    }
+    return false;
+}
+
+
+bool sqlite_utils::get_pro_sum_by_year(float* const writing_pro_sum, float* const reading_pro_sum,
+    float* const art_learning_pro_sum, float* const computer_learning_pro_sum, float* const total_pro_sum, const int year)
+{
+    QString year_str = "";
+    year_str = QString("%1").arg(year);
+
+    QString sql = "select sum(writing_pro),sum(reading_pro),sum(art_learning_pro),sum(computer_science_tech_pro),sum(total_pro) from pro where strftime('%Y',date)='";
+    sql.append(year_str).append("';");
+
+    qDebug() << sql;
+    QSqlQuery sql_query;
+    sql_query.prepare(sql);
+    if(!sql_query.exec())
+    {
+        return false;
+    }
+    if(sql_query.next())
+    {
+        if (sql_query.value(0) == NULL || sql_query.value(0).toString().compare("") == 0)
+        {
+            *writing_pro_sum = 0;
+        }
+        else
+        {
+            *writing_pro_sum = sql_query.value(0).toFloat();
+        }
+        if (sql_query.value(1) == NULL || sql_query.value(1).toString().compare("") == 0)
+        {
+            *reading_pro_sum = 0;
+        }
+        else
+        {
+            *reading_pro_sum = sql_query.value(1).toFloat();
+        }
+        if (sql_query.value(2) == NULL || sql_query.value(2).toString().compare("") == 0)
+        {
+            *art_learning_pro_sum = 0;
+        }
+        else
+        {
+            *art_learning_pro_sum = sql_query.value(2).toFloat();
+        }
+        if (sql_query.value(3) == NULL || sql_query.value(3).toString().compare("") == 0)
+        {
+            *computer_learning_pro_sum = 0;
+        }
+        else
+        {
+            *computer_learning_pro_sum = sql_query.value(3).toFloat();
+        }
+        if (sql_query.value(4) == NULL || sql_query.value(4).toString().compare("") == 0)
+        {
+            *total_pro_sum = 0;
+        }
+        else
+        {
+            *total_pro_sum = sql_query.value(4).toFloat();
+        }
+        return true;
+    }
+    return false;
+}
+
+
+bool sqlite_utils::get_pro_sum(float* const writing_pro_sum, float* const reading_pro_sum,
+    float* const art_learning_pro_sum, float* const computer_learning_pro_sum, float* const total_pro_sum)
+{
+    QString sql = "select sum(writing_pro),sum(reading_pro),sum(art_learning_pro),sum(computer_science_tech_pro),sum(total_pro) from pro;";
+
+    qDebug() << sql;
+    QSqlQuery sql_query;
+    sql_query.prepare(sql);
+    if(!sql_query.exec())
+    {
+        return false;
+    }
+    if(sql_query.next())
+    {
+        if (sql_query.value(0) == NULL || sql_query.value(0).toString().compare("") == 0)
+        {
+            *writing_pro_sum = 0;
+        }
+        else
+        {
+            *writing_pro_sum = sql_query.value(0).toFloat();
+        }
+        if (sql_query.value(1) == NULL || sql_query.value(1).toString().compare("") == 0)
+        {
+            *reading_pro_sum = 0;
+        }
+        else
+        {
+            *reading_pro_sum = sql_query.value(1).toFloat();
+        }
+        if (sql_query.value(2) == NULL || sql_query.value(2).toString().compare("") == 0)
+        {
+            *art_learning_pro_sum = 0;
+        }
+        else
+        {
+            *art_learning_pro_sum = sql_query.value(2).toFloat();
+        }
+        if (sql_query.value(3) == NULL || sql_query.value(3).toString().compare("") == 0)
+        {
+            *computer_learning_pro_sum = 0;
+        }
+        else
+        {
+            *computer_learning_pro_sum = sql_query.value(3).toFloat();
+        }
+        if (sql_query.value(4) == NULL || sql_query.value(4).toString().compare("") == 0)
+        {
+            *total_pro_sum = 0;
+        }
+        else
+        {
+            *total_pro_sum = sql_query.value(4).toFloat();
+        }
+        return true;
+    }
+    return false;
+}

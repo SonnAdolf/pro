@@ -18,6 +18,22 @@ pro::pro(float writing_pro, float art_learning_pro, float reading_pro, float com
 
 pro::pro(QString writing_pro, QString art_learning_pro, QString reading_pro, QString computer_pro, QString note)
 {
+    if (writing_pro.compare("")==0||writing_pro==NULL)
+    {
+        writing_pro = "0";
+    }
+    if (art_learning_pro.compare("")==0||art_learning_pro==NULL)
+    {
+        art_learning_pro = "0";
+    }
+    if (reading_pro.compare("")==0||reading_pro==NULL)
+    {
+        reading_pro = "0";
+    }
+    if (computer_pro.compare("")==0||computer_pro==NULL)
+    {
+        computer_pro = "0";
+    }
     this->m_art_learning_pro = art_learning_pro.toFloat();
     this->m_reading_pro = reading_pro.toFloat();
     this->m_writing_pro = writing_pro.toFloat();
