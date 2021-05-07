@@ -4,6 +4,7 @@
 #include <QString>
 #include <QDialog>
 #include <QDate>
+#include <QMessageBox>
 
 #include "pro_dayset_serv.h"
 

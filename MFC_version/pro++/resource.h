@@ -37,6 +37,8 @@
 #define IDC_REFRESH_BTN                 1024
 #define IDC_EDIT6                       1025
 #define IDC_PRO_COMPUTER_LEARN_SEARCH_EDIT 1026
+#define IDC_BUTTON1                     1027
+#define IDC_DAY_NEXT_BUT                1028
 
 // Next default values for new objects
 // 
@@ -44,7 +46,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        136
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1027
+#define _APS_NEXT_CONTROL_VALUE         1028
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

@@ -40,10 +40,40 @@ void pro_dayset_dlg::on_inpt_btn_clicked()
     {
         ctl_pro_str = "0";
     }
+    bool ret;
+    write_pro_str.toFloat(&ret);
+    if (!ret)
+    {
+        QMessageBox::about(NULL,  "錯誤",  "輸入信息有誤");
+        return;
+    }
+    read_pro_str.toFloat(&ret);
+    if (!ret)
+    {
+        QMessageBox::about(NULL,  "錯誤",  "輸入信息有誤");
+        return;
+    }
+    art_pro_str.toFloat(&ret);
+    if (!ret)
+    {
+        QMessageBox::about(NULL,  "錯誤",  "輸入信息有誤");
+        return;
+    }
+    ctl_pro_str.toFloat(&ret);
+    if (!ret)
+    {
+        QMessageBox::about(NULL,  "錯誤",  "輸入信息有誤");
+        return;
+    }
     pro tmp_pro(write_pro_str,art_pro_str,read_pro_str,ctl_pro_str,note_str);
     if (pro_dayset_serv::get_inst().day_set_pro(tmp_pro,date_str) < 0)
     {
         qDebug()<<"Add pro error...";
+        QMessageBox::about(NULL,  "錯誤",  "輸入信息有誤");
+    }
+    else
+    {
+        QMessageBox::about(NULL,  "成功",  "pro++");
     }
 }
 

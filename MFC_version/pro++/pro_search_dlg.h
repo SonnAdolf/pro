@@ -2,7 +2,6 @@
 
 #include "resource.h"
 
-// CProSearchDlg ¶Ô»°¿ò
 
 class CProSearchDlg : public CDialogEx
 {
@@ -31,4 +30,7 @@ private:
 	CEdit m_pro_total_search_edit;
 	CEdit m_pro_note_search_edit;
 	CEdit m_pro_computer_learn_search_edit;
+public:
+	afx_msg void on_bn_clicked_day_next_but();
+	afx_msg void on_bn_clicked_day_pre_but();
 };
