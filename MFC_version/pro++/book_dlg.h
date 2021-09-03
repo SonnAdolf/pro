@@ -1,6 +1,7 @@
 #pragma once
 
 #include "resource.h"
+#include "book_add_dlg.h"
 
 // CBookDlg dialog
 
@@ -21,4 +22,8 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 
+public:
+	afx_msg void on_book_add_btn_clicked();
+private:
+	CBookAddDlg m_book_add_dlg;
 };

@@ -48,9 +48,33 @@ public:
 	*/
 	bool create_tables();
 
-
 	bool add_pro(CPro pro, std::wstring date);
 
+	int get_tag_id_by_name(std::wstring name);
+	
+	int get_translator_id_by_name(std::wstring name);
+
+	int get_author_id_by_name(std::wstring name);
+
+	bool check_if_tag_of_name_exist(std::wstring name);
+	
+	bool check_if_author_of_name_exist(std::wstring name);
+
+	bool check_if_translator_of_name_exist(std::wstring name);
+
+	int get_last_insert_tag_id();
+
+	int get_last_insert_book_id();
+
+	int get_last_insert_author_id();
+
+	int get_last_insert_translator_id();
+
+	int add_tag_ret_id(std::wstring name);
+
+	int add_author_ret_id(std::wstring name);
+
+	int add_translator_ret_id(std::wstring name);
 
 	bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro_sum,
 		float* const art_learning_pro_sum, float* const computer_learning_pro, float* const total_pro_sum, const int year, const int month);

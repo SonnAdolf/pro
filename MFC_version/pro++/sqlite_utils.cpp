@@ -86,6 +86,340 @@ bool CSqliteUtils::add_pro(CPro pro, std::wstring date) {
 	return true;
 }
 
+bool CSqliteUtils::check_if_tag_of_name_exist(std::wstring name) {
+	using namespace std;
+	wstring sql = L"select count(*) from tag where name='";
+	sql.append(name);
+	sql.append(L"';");
+	std::string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return false;
+	}
+	int nIndex = nCol;
+	if (atoi(pResult[nIndex]) > 0)
+		return true;
+	return false;
+}
+
+bool CSqliteUtils::check_if_author_of_name_exist(std::wstring name) {
+	using namespace std;
+	wstring sql = L"select count(*) from author where name='";
+	sql.append(name);
+	sql.append(L"';");
+	std::string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return false;
+	}
+	int nIndex = nCol;
+	if (atoi(pResult[nIndex]) > 0)
+		return true;
+	return false;
+}
+
+bool CSqliteUtils::check_if_translator_of_name_exist(std::wstring name) {
+	using namespace std;
+	wstring sql = L"select count(*) from translator where name='";
+	sql.append(name);
+	sql.append(L"';");
+	std::string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return false;
+	}
+	int nIndex = nCol;
+	if (atoi(pResult[nIndex]) > 0)
+		return true;
+	return false;
+}
+
+int CSqliteUtils::get_tag_id_by_name(std::wstring name) {
+	using namespace std;
+	wstring sql = L"select id from tag where name = '";
+	sql.append(name).append(L"';");
+	string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return -1;
+	}
+	if (nRow == 0 || nCol == 0)
+		return -1;
+	int nIndex = nCol;
+	int id;
+	if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
+	{
+		id = -1;
+	}
+	else
+	{
+		id = static_cast<int>(atoi(pResult[nIndex]));
+	}
+	return id;
+}
+
+int CSqliteUtils::get_author_id_by_name(std::wstring name) {
+	using namespace std;
+	wstring sql = L"select id from author where name = '";
+	sql.append(name).append(L"';");
+	string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return -1;
+	}
+	if (nRow == 0 || nCol == 0)
+		return -1;
+	int nIndex = nCol;
+	int id;
+	if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
+	{
+		id = -1;
+	}
+	else
+	{
+		id = static_cast<int>(atoi(pResult[nIndex]));
+	}
+	return id;
+}
+
+int CSqliteUtils::get_translator_id_by_name(std::wstring name) {
+	using namespace std;
+	wstring sql = L"select id from translator where name = '";
+	sql.append(name).append(L"';");
+	string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return -1;
+	}
+	if (nRow == 0 || nCol == 0)
+		return -1;
+	int nIndex = nCol;
+	int id;
+	if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
+	{
+		id = -1;
+	}
+	else
+	{
+		id = static_cast<int>(atoi(pResult[nIndex]));
+	}
+	return id;
+}
+
+int CSqliteUtils::get_last_insert_tag_id() {
+	using namespace std;
+	wstring sql = L"select last_insert_rowid() from tag;";
+	string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return -1;
+	}
+	if (nRow == 0 || nCol == 0)
+		return -1;
+	int nIndex = nCol;
+	int id;
+	if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
+	{
+		id = -1;
+	}
+	else
+	{
+		id = static_cast<int>(atoi(pResult[nIndex]));
+	}
+	return id;
+}
+
+int CSqliteUtils::get_last_insert_book_id() {
+	using namespace std;
+	wstring sql = L"select last_insert_rowid() from book;";
+	string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return -1;
+	}
+	if (nRow == 0 || nCol == 0)
+		return -1;
+	int nIndex = nCol;
+	int id;
+	if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
+	{
+		id = -1;
+	}
+	else
+	{
+		id = static_cast<int>(atoi(pResult[nIndex]));
+	}
+	return id;
+}
+
+int CSqliteUtils::get_last_insert_author_id() {
+	using namespace std;
+	wstring sql = L"select last_insert_rowid() from author;";
+	string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return -1;
+	}
+	if (nRow == 0 || nCol == 0)
+		return -1;
+	int nIndex = nCol;
+	int id;
+	if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
+	{
+		id = -1;
+	}
+	else
+	{
+		id = static_cast<int>(atoi(pResult[nIndex]));
+	}
+	return id;
+}
+
+int CSqliteUtils::get_last_insert_translator_id() {
+	using namespace std;
+	wstring sql = L"select last_insert_rowid() from translator;";
+	string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return -1;
+	}
+	if (nRow == 0 || nCol == 0)
+		return -1;
+	int nIndex = nCol;
+	int id;
+	if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
+	{
+		id = -1;
+	}
+	else
+	{
+		id = static_cast<int>(atoi(pResult[nIndex]));
+	}
+	return id;
+}
+
+int CSqliteUtils::add_tag_ret_id(std::wstring name) {
+	using namespace std;
+
+	if (check_if_tag_of_name_exist(name)) {
+		return get_tag_id_by_name(name);
+	}
+
+	wstring sql = L"insert into tag(name) values('";
+	sql.append(name).append(L"');");
+
+	std::string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	// sqlite使用utf-8编码，汉字需要转
+	string str_utf8_sql = ascii_2_utf8(str_sql);
+
+	char* errmsg;
+	if (sqlite3_exec(m_db, str_utf8_sql.c_str(), NULL, NULL, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : insert data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return -1;
+	}
+	return get_last_insert_tag_id();
+}
+
+int CSqliteUtils::add_author_ret_id(std::wstring name) {
+	using namespace std;
+
+	if (check_if_author_of_name_exist(name)) {
+		return get_author_id_by_name(name);
+	}
+
+	wstring sql = L"insert into author(name) values('";
+	sql.append(name).append(L"');");
+
+	std::string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	// sqlite使用utf-8编码，汉字需要转
+	string str_utf8_sql = ascii_2_utf8(str_sql);
+
+	char* errmsg;
+	if (sqlite3_exec(m_db, str_utf8_sql.c_str(), NULL, NULL, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : insert data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return -1;
+	}
+	return get_last_insert_author_id();
+}
+
+int CSqliteUtils::add_translator_ret_id(std::wstring name) {
+	using namespace std;
+
+	if (check_if_translator_of_name_exist(name)) {
+		return get_translator_id_by_name(name);
+	}
+
+	wstring sql = L"insert into translator(name) values('";
+	sql.append(name).append(L"');");
+
+	std::string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	// sqlite使用utf-8编码，汉字需要转
+	string str_utf8_sql = ascii_2_utf8(str_sql);
+
+	char* errmsg;
+	if (sqlite3_exec(m_db, str_utf8_sql.c_str(), NULL, NULL, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : insert data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return -1;
+	}
+	return get_last_insert_translator_id();
+}
+
 
 bool CSqliteUtils::update_pro(CPro pro, std::wstring date) {
 	using namespace std;

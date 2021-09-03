@@ -41,7 +41,7 @@ class sqlite_utils:
         c = self.conn.cursor()
         sql_str="select writing_pro,reading_pro,art_learning_pro,computer_science_tech_pro,note from pro where date='"
         sql_str = sql_str + str_date + "';"
-        #print('sql:'+sql_str)
+        print('sql:'+sql_str)
         cursor = self.conn.execute(sql_str)
         cursor_list = list(cursor)
         if len(cursor_list)<1:
@@ -70,7 +70,7 @@ class sqlite_utils:
         else:
             row_list.append(row[4])
             
-        #print(row)
+        print(row)
         pro_sel = pro(float(row_list[0]),float(row_list[2]),float(row_list[1]),float(row_list[3]),row_list[4])
         self.conn.close()   
         return pro_sel

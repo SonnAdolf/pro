@@ -34,6 +34,7 @@ BOOL CBookDlg::OnInitDialog()
 	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), TRUE);
 	/*set small icon*/
 	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), FALSE);
+	m_book_add_dlg.Create(CBookAddDlg::IDD, this);
 	//m_date_ctrl.SetFormat(L"yyyy-MM-dd");
 	return TRUE;
 }
@@ -54,5 +55,13 @@ void CBookDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CBookDlg, CDialogEx)
 	ON_WM_PAINT()
 	//ON_BN_CLICKED(IDC_INPT_TODAY_PRO_BTN, &CProTodayDlg::on_clicked_inpt_today_pro_btn)
+	ON_BN_CLICKED(IDC_ADD_BOOK_BUTTON, &CBookDlg::on_book_add_btn_clicked)
 END_MESSAGE_MAP()
 
+
+
+void CBookDlg::on_book_add_btn_clicked()
+{
+	m_book_add_dlg.ShowWindow(SW_SHOW);
+	return;
+}
