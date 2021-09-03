@@ -37,7 +37,18 @@ int CSqliteUtils::sqlite_conn() {
 bool CSqliteUtils::create_tables() {
 	using namespace std;
 	//id,writing_pro,reading_pro,art_learning_pro,total_pro,note,str_date,date
-	string str_sql = "CREATE TABLE IF NOT EXISTS  pro(id integer  primary key autoincrement,writing_pro integer,reading_pro integer,art_learning_pro integer,computer_science_tech_pro integer,total_pro integer,note varchar(500),date date NOT NULL); ";
+	string str_sql = "CREATE TABLE IF NOT EXISTS  pro(id integer primary key autoincrement,writing_pro integer,reading_pro integer,art_learning_pro integer,computer_science_tech_pro integer,total_pro integer,note varchar(500),date date NOT NULL);\
+		CREATE TABLE IF NOT EXISTS author(id integer primary key autoincrement,name varchar(30));\
+		CREATE TABLE IF NOT EXISTS tag(id integer primary key autoincrement, name varchar(30));\
+		CREATE TABLE IF NOT EXISTS translator(id integer primary key autoincrement, name varchar(30));\
+		CREATE TABLE IF NOT EXISTS publisher(id integer primary key autoincrement, name varchar(30));\
+		CREATE TABLE IF NOT EXISTS book(id integer primary key autoincrement,note varchar(900),name varchar(50) not null,date date not null,score integer check(-1<score and score<101) not null,page_num integer check(page_num>0),pub_year integer check(pub_year>0 and pub_year<3000),publisher_id integer references publisher(id));\
+		CREATE TABLE IF NOT EXISTS book_tag(id integer primary key autoincrement,book_id integer references book(id),tag_id integer references tag(id));\
+		CREATE TABLE IF NOT EXISTS book_author(id integer primary key autoincrement, book_id integer references book(id), author_id integer references author(id));\
+		CREATE TABLE IF NOT EXISTS book_translator(id integer primary key autoincrement, book_id integer references book(id), translator_id integer references translator(id));\
+		";
+	//CREATE TABLE IF NOT EXISTS movie(id integer primary key autoincrement, note varchar(900), name varchar(50), date date not null, score integer check(-1 < score and score < 101)); \
+	//CREATE TABLE IF NOT EXISTS game(id integer primary key autoincrement, note varchar(900), name varchar(50), date date not null, score integer check(-1 < score and score < 101));
 	char* cErrMsg;
 	int nRes = sqlite3_exec(m_db, str_sql.c_str(), 0, 0, &cErrMsg);
 	if (nRes != SQLITE_OK)

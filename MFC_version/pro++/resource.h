@@ -7,12 +7,14 @@
 #define IDD_PRO_TODAY_DIALOG            130
 #define IDD_PRO_STATISTICS_DIALOG       132
 #define IDD_PRO_SEARCH_DIALOG           134
+#define IDD_BOOK_DIALOG                 136
 #define IDC_CHECK1                      1001
 #define IDC_PRO_TODAY_BTN               1002
 #define IDC_BUTTON2                     1003
 #define IDC_BUTTON3                     1004
 #define IDC_PIC_STATIC                  1005
 #define IDC_BUTTON4                     1006
+#define IDC_MOVIE_DIAG_BUTTON           1006
 #define IDC_PRO_WRITING_EDIT            1007
 #define IDC_PRO_READING_EDIT            1008
 #define IDC_PRO_ART_LEARNING_EDIT       1009
@@ -38,15 +40,18 @@
 #define IDC_EDIT6                       1025
 #define IDC_PRO_COMPUTER_LEARN_SEARCH_EDIT 1026
 #define IDC_BUTTON1                     1027
+#define IDC_BOOK_DIAG_BUTTON            1027
+#define IDC_ADD_BOOK_BUTTON             1027
 #define IDC_DAY_NEXT_BUT                1028
+#define IDC_GAME_DIAG_BUTTON            1028
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        136
+#define _APS_NEXT_RESOURCE_VALUE        138
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1028
+#define _APS_NEXT_CONTROL_VALUE         1029
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

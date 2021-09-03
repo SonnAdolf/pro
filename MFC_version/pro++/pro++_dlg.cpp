@@ -38,6 +38,7 @@ BEGIN_MESSAGE_MAP(CProPlusPlusDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_PRO_TODAY_BTN, &CProPlusPlusDlg::on_pro_today_btn_clicked)
 	ON_BN_CLICKED(IDC_BUTTON2, &CProPlusPlusDlg::on_pro_search_btn_clicked)
 	ON_BN_CLICKED(IDC_BUTTON3, &CProPlusPlusDlg::on_pro_statistics_btn_clicked)
+	ON_BN_CLICKED(IDC_BOOK_DIAG_BUTTON, &CProPlusPlusDlg::on_book_btn_clicked)
 END_MESSAGE_MAP()
 
 
@@ -54,6 +55,7 @@ BOOL CProPlusPlusDlg::OnInitDialog()
 	m_pro_today_dlg.Create(CProTodayDlg::IDD,this);
 	m_pro_search_dlg.Create(CProSearchDlg::IDD, this);
 	m_pro_statistics_dlg.Create(CProStatisticsDlg::IDD, this);
+	m_book_dlg.Create(CBookDlg::IDD, this);
 
 	return TRUE; 
 }
@@ -124,5 +126,12 @@ void CProPlusPlusDlg::on_pro_search_btn_clicked()
 void CProPlusPlusDlg::on_pro_statistics_btn_clicked()
 {
 	this->m_pro_statistics_dlg.ShowWindow(SW_SHOW);
+	return;
+}
+
+
+void CProPlusPlusDlg::on_book_btn_clicked()
+{
+	this->m_book_dlg.ShowWindow(SW_SHOW);
 	return;
 }

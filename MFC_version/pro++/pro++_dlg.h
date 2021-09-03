@@ -5,6 +5,7 @@
 #include "pro_today_dlg.h"
 #include "pro_search_dlg.h"
 #include "pro_statistics_dlg.h"
+#include "book_dlg.h"
 
 // CProPlusPlusDlg 对话框
 class CProPlusPlusDlg : public CDialogEx
@@ -37,7 +38,9 @@ private:
 	CProTodayDlg m_pro_today_dlg;
 	CProSearchDlg m_pro_search_dlg;
 	CProStatisticsDlg m_pro_statistics_dlg;
+	CBookDlg m_book_dlg;
 public:
 	afx_msg void on_pro_search_btn_clicked();
 	afx_msg void on_pro_statistics_btn_clicked();
+	afx_msg void on_book_btn_clicked();
 };
