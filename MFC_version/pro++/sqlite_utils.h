@@ -56,11 +56,15 @@ public:
 
 	int get_author_id_by_name(std::wstring name);
 
+	int get_publisher_id_by_name(std::wstring name);
+
 	bool check_if_tag_of_name_exist(std::wstring name);
 	
 	bool check_if_author_of_name_exist(std::wstring name);
 
 	bool check_if_translator_of_name_exist(std::wstring name);
+
+	bool check_if_publisher_of_name_exist(std::wstring name);
 
 	int get_last_insert_tag_id();
 
@@ -70,11 +74,23 @@ public:
 
 	int get_last_insert_translator_id();
 
+	int get_last_insert_publisher_id();
+
 	int add_tag_ret_id(std::wstring name);
 
 	int add_author_ret_id(std::wstring name);
 
 	int add_translator_ret_id(std::wstring name);
+
+	int add_tag_book_relation(std::wstring tag_id, std::wstring book_id);
+
+	int add_author_book_relation(std::wstring author_id, std::wstring book_id);
+	int add_translator_book_relation(std::wstring translator_id, std::wstring book_id);
+
+	int add_publisher_ret_id(std::wstring name);
+
+	int add_book_review_ret_id(std::wstring name, std::wstring score,
+		std::wstring publisher_id, std::wstring note, std::wstring page_num, std::wstring date, std::wstring pub_year);
 
 	bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro_sum,
 		float* const art_learning_pro_sum, float* const computer_learning_pro, float* const total_pro_sum, const int year, const int month);

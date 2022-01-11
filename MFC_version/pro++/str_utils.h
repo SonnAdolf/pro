@@ -13,3 +13,5 @@ void string_to_wstring(std::wstring& szDst, const std::string str);
 std::string utf8_2_ascii(std::string& strUtf8Code);
 
 std::string ascii_2_utf8(std::string& strAsciiCode);
+
+std::vector<std::wstring> split(const std::wstring& s, const std::wstring& delim);

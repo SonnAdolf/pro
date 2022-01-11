@@ -136,3 +136,20 @@ std::string ascii_2_utf8(std::string& strAsciiCode) {
 	strRet = Unicode2Utf8(wstr);
 	return strRet;
 }
+
+std::vector<std::wstring> split(const std::wstring& s, const std::wstring& delim) {
+	std::vector<std::wstring> elems;
+	size_t pos = 0;
+	size_t len = s.length();
+	size_t delim_len = delim.length();
+	while (pos < len) {
+		int find_pos = s.find(delim, pos);
+		if (find_pos < 0) {
+			elems.push_back(s.substr(pos, len - pos));
+			break;
+		}
+		elems.push_back(s.substr(pos, find_pos - pos));
+		pos = find_pos + delim_len;
+	}
+	return elems;
+}
