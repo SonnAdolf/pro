@@ -195,4 +195,5 @@ void CBookAddDlg::on_clicked_add_book_btn()
 		_itow(translators_ids[i], buf_translator_id, 10);
 		CBookServ::get_inst().add_translator_book_relation(buf_translator_id, buf_book_id);
 	}
+	MessageBox(L"HAVE ADDED THE BOOK REVIEW.", L"NOTE");
 }

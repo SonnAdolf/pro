@@ -57,7 +57,7 @@ bool CSqliteUtils::create_tables() {
 }
 
 
-bool CSqliteUtils::add_pro(CPro pro, std::wstring date) {
+bool CSqliteUtils::add_pro(CPro pro, std::wstring date)  const {
 	using namespace std;
 	int pos;
 	pos = date.find(L"/");
@@ -86,17 +86,19 @@ bool CSqliteUtils::add_pro(CPro pro, std::wstring date) {
 	return true;
 }
 
-bool CSqliteUtils::check_if_tag_of_name_exist(std::wstring name) {
+bool CSqliteUtils::check_if_tag_of_name_exist(const std::wstring& name) const {
 	using namespace std;
 	wstring sql = L"select count(*) from tag where name='";
 	sql.append(name);
 	sql.append(L"';");
 	std::string str_sql;
 	wchar_to_string(str_sql, sql.c_str());
+	// sqlite使用utf-8编码，汉字需要转
+	string str_utf8_sql = ascii_2_utf8(str_sql);
 	char* errmsg;
 	char** pResult;
 	int nRow, nCol;
-	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+	if (sqlite3_get_table(m_db, str_utf8_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : select data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return false;
@@ -109,17 +111,19 @@ bool CSqliteUtils::check_if_tag_of_name_exist(std::wstring name) {
 	return false;
 }
 
-bool CSqliteUtils::check_if_author_of_name_exist(std::wstring name) {
+bool CSqliteUtils::check_if_author_of_name_exist(const std::wstring& name) const {
 	using namespace std;
 	wstring sql = L"select count(*) from author where name='";
 	sql.append(name);
 	sql.append(L"';");
 	std::string str_sql;
 	wchar_to_string(str_sql, sql.c_str());
+	// sqlite使用utf-8编码，汉字需要转
+	string str_utf8_sql = ascii_2_utf8(str_sql);
 	char* errmsg;
 	char** pResult;
 	int nRow, nCol;
-	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+	if (sqlite3_get_table(m_db, str_utf8_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : select data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return false;
@@ -130,17 +134,19 @@ bool CSqliteUtils::check_if_author_of_name_exist(std::wstring name) {
 	return false;
 }
 
-bool CSqliteUtils::check_if_translator_of_name_exist(std::wstring name) {
+bool CSqliteUtils::check_if_translator_of_name_exist(const std::wstring& name) const {
 	using namespace std;
 	wstring sql = L"select count(*) from translator where name='";
 	sql.append(name);
 	sql.append(L"';");
 	std::string str_sql;
 	wchar_to_string(str_sql, sql.c_str());
+	// sqlite使用utf-8编码，汉字需要转
+	string str_utf8_sql = ascii_2_utf8(str_sql);
 	char* errmsg;
 	char** pResult;
 	int nRow, nCol;
-	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+	if (sqlite3_get_table(m_db, str_utf8_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : select data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return false;
@@ -151,17 +157,19 @@ bool CSqliteUtils::check_if_translator_of_name_exist(std::wstring name) {
 	return false;
 }
 
-bool CSqliteUtils::check_if_publisher_of_name_exist(std::wstring name) {
+bool CSqliteUtils::check_if_publisher_of_name_exist(const std::wstring& name) const {
 	using namespace std;
 	wstring sql = L"select count(*) from publisher where name='";
 	sql.append(name);
 	sql.append(L"';");
 	std::string str_sql;
 	wchar_to_string(str_sql, sql.c_str());
+	// sqlite使用utf-8编码，汉字需要转
+	string str_utf8_sql = ascii_2_utf8(str_sql);
 	char* errmsg;
 	char** pResult;
 	int nRow, nCol;
-	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+	if (sqlite3_get_table(m_db, str_utf8_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : select data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return false;
@@ -172,16 +180,18 @@ bool CSqliteUtils::check_if_publisher_of_name_exist(std::wstring name) {
 	return false;
 }
 
-int CSqliteUtils::get_tag_id_by_name(std::wstring name) {
+int CSqliteUtils::get_tag_id_by_name(const std::wstring& name) const {
 	using namespace std;
 	wstring sql = L"select id from tag where name = '";
 	sql.append(name).append(L"';");
 	string str_sql;
 	wchar_to_string(str_sql, sql.c_str());
+	// sqlite使用utf-8编码，汉字需要转
+	string str_utf8_sql = ascii_2_utf8(str_sql);
 	char* errmsg;
 	char** pResult;
 	int nRow, nCol;
-	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+	if (sqlite3_get_table(m_db, str_utf8_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : select data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return -1;
@@ -201,16 +211,18 @@ int CSqliteUtils::get_tag_id_by_name(std::wstring name) {
 	return id;
 }
 
-int CSqliteUtils::get_author_id_by_name(std::wstring name) {
+int CSqliteUtils::get_author_id_by_name(const std::wstring& name) const {
 	using namespace std;
 	wstring sql = L"select id from author where name = '";
 	sql.append(name).append(L"';");
 	string str_sql;
 	wchar_to_string(str_sql, sql.c_str());
+	// sqlite使用utf-8编码，汉字需要转
+	string str_utf8_sql = ascii_2_utf8(str_sql);
 	char* errmsg;
 	char** pResult;
 	int nRow, nCol;
-	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+	if (sqlite3_get_table(m_db, str_utf8_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : select data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return -1;
@@ -230,16 +242,18 @@ int CSqliteUtils::get_author_id_by_name(std::wstring name) {
 	return id;
 }
 
-int CSqliteUtils::get_translator_id_by_name(std::wstring name) {
+int CSqliteUtils::get_translator_id_by_name(const std::wstring& name) const {
 	using namespace std;
 	wstring sql = L"select id from translator where name = '";
 	sql.append(name).append(L"';");
 	string str_sql;
 	wchar_to_string(str_sql, sql.c_str());
+	// sqlite使用utf-8编码，汉字需要转
+	string str_utf8_sql = ascii_2_utf8(str_sql);
 	char* errmsg;
 	char** pResult;
 	int nRow, nCol;
-	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+	if (sqlite3_get_table(m_db, str_utf8_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : select data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return -1;
@@ -259,16 +273,18 @@ int CSqliteUtils::get_translator_id_by_name(std::wstring name) {
 	return id;
 }
 
-int CSqliteUtils::get_publisher_id_by_name(std::wstring name) {
+int CSqliteUtils::get_publisher_id_by_name(const std::wstring& name) const {
 	using namespace std;
 	wstring sql = L"select id from publisher where name = '";
 	sql.append(name).append(L"';");
 	string str_sql;
 	wchar_to_string(str_sql, sql.c_str());
+	// sqlite使用utf-8编码，汉字需要转
+	string str_utf8_sql = ascii_2_utf8(str_sql);
 	char* errmsg;
 	char** pResult;
 	int nRow, nCol;
-	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+	if (sqlite3_get_table(m_db, str_utf8_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
 		cout << "sqlite : select data failed. error : " << errmsg << endl;
 		sqlite3_free(errmsg);
 		return -1;
@@ -288,7 +304,7 @@ int CSqliteUtils::get_publisher_id_by_name(std::wstring name) {
 	return id;
 }
 
-int CSqliteUtils::get_last_insert_tag_id() {
+int CSqliteUtils::get_last_insert_tag_id() const {
 	using namespace std;
 	wstring sql = L"select last_insert_rowid() from tag;";
 	string str_sql;
@@ -316,7 +332,7 @@ int CSqliteUtils::get_last_insert_tag_id() {
 	return id;
 }
 
-int CSqliteUtils::get_last_insert_book_id() {
+int CSqliteUtils::get_last_insert_book_id() const {
 	using namespace std;
 	wstring sql = L"select last_insert_rowid() from book;";
 	string str_sql;
@@ -344,7 +360,7 @@ int CSqliteUtils::get_last_insert_book_id() {
 	return id;
 }
 
-int CSqliteUtils::get_last_insert_author_id() {
+int CSqliteUtils::get_last_insert_author_id() const {
 	using namespace std;
 	wstring sql = L"select last_insert_rowid() from author;";
 	string str_sql;
@@ -372,7 +388,7 @@ int CSqliteUtils::get_last_insert_author_id() {
 	return id;
 }
 
-int CSqliteUtils::get_last_insert_translator_id() {
+int CSqliteUtils::get_last_insert_translator_id() const {
 	using namespace std;
 	wstring sql = L"select last_insert_rowid() from translator;";
 	string str_sql;
@@ -400,7 +416,7 @@ int CSqliteUtils::get_last_insert_translator_id() {
 	return id;
 }
 
-int CSqliteUtils::get_last_insert_publisher_id() {
+int CSqliteUtils::get_last_insert_publisher_id() const {
 	using namespace std;
 	wstring sql = L"select last_insert_rowid() from publisher;";
 	string str_sql;
@@ -428,7 +444,7 @@ int CSqliteUtils::get_last_insert_publisher_id() {
 	return id;
 }
 
-int CSqliteUtils::add_tag_ret_id(std::wstring name) {
+int CSqliteUtils::add_tag_ret_id(const std::wstring&  name)  const {
 	using namespace std;
 
 	if (check_if_tag_of_name_exist(name)) {
@@ -452,7 +468,7 @@ int CSqliteUtils::add_tag_ret_id(std::wstring name) {
 	return get_last_insert_tag_id();
 }
 
-int CSqliteUtils::add_author_ret_id(std::wstring name) {
+int CSqliteUtils::add_author_ret_id(const std::wstring& name) const {
 	using namespace std;
 
 	if (check_if_author_of_name_exist(name)) {
@@ -476,7 +492,7 @@ int CSqliteUtils::add_author_ret_id(std::wstring name) {
 	return get_last_insert_author_id();
 }
 
-int CSqliteUtils::add_translator_ret_id(std::wstring name) {
+int CSqliteUtils::add_translator_ret_id(const std::wstring& name) const {
 	using namespace std;
 
 	if (check_if_translator_of_name_exist(name)) {
@@ -499,7 +515,7 @@ int CSqliteUtils::add_translator_ret_id(std::wstring name) {
 	}
 	return get_last_insert_translator_id();
 }
-int CSqliteUtils::add_tag_book_relation(std::wstring tag_id, std::wstring book_id) {
+int CSqliteUtils::add_tag_book_relation(const std::wstring& tag_id, const std::wstring& book_id) const {
 	using namespace std;
 
 	wstring sql = L"insert into book_tag(tag_id,book_id) values(";
@@ -518,7 +534,7 @@ int CSqliteUtils::add_tag_book_relation(std::wstring tag_id, std::wstring book_i
 	}
 	return 0;
 }
-int CSqliteUtils::add_translator_book_relation(std::wstring translator_id, std::wstring book_id) {
+int CSqliteUtils::add_translator_book_relation(const std::wstring& translator_id, const std::wstring& book_id) const {
 	using namespace std;
 
 	wstring sql = L"insert into book_translator(translator_id,book_id) values(";
@@ -537,7 +553,7 @@ int CSqliteUtils::add_translator_book_relation(std::wstring translator_id, std::
 	}
 	return 0;
 }
-int CSqliteUtils::add_author_book_relation(std::wstring author_id, std::wstring book_id) {
+int CSqliteUtils::add_author_book_relation(const std::wstring& author_id, const std::wstring& book_id) const {
 	using namespace std;
 
 	wstring sql = L"insert into book_author(author_id,book_id) values(";
@@ -556,7 +572,7 @@ int CSqliteUtils::add_author_book_relation(std::wstring author_id, std::wstring 
 	}
 	return 0;
 }
-int CSqliteUtils::add_publisher_ret_id(std::wstring name) {
+int CSqliteUtils::add_publisher_ret_id(const std::wstring& name) const {
 	using namespace std;
 
 	if (check_if_publisher_of_name_exist(name)) {
@@ -580,8 +596,8 @@ int CSqliteUtils::add_publisher_ret_id(std::wstring name) {
 	return get_last_insert_publisher_id();
 }
 
-int CSqliteUtils::add_book_review_ret_id(std::wstring name, std::wstring score,
-	std::wstring publisher_id,std::wstring note,std::wstring page_num,std::wstring date,std::wstring pub_year) {
+int CSqliteUtils::add_book_review_ret_id(const std::wstring& name, const std::wstring& score,
+	const std::wstring& publisher_id,const std::wstring& note,const std::wstring& page_num,const std::wstring& date,const std::wstring& pub_year) const {
 	using namespace std;
 
 	wstring sql = L"insert into book(note,name,date,score,page_num,pub_year,publisher_id) values('";
@@ -605,7 +621,7 @@ int CSqliteUtils::add_book_review_ret_id(std::wstring name, std::wstring score,
 
 
 
-bool CSqliteUtils::update_pro(CPro pro, std::wstring date) {
+bool CSqliteUtils::update_pro(CPro pro, const std::wstring& date) const {
 	using namespace std;
 	wstring sql = L"update pro set writing_pro='";
 	sql.append(pro.get_writing_pro_str()).append(L"',reading_pro='").append(pro.get_reading_pro_str()).append(L"',art_learning_pro='")
@@ -631,7 +647,7 @@ bool CSqliteUtils::update_pro(CPro pro, std::wstring date) {
 
 
 bool CSqliteUtils::get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro_sum,
-	float* const art_learning_pro_sum, float* const computer_learning_pro_sum, float* const total_pro_sum, const int year, const int month) {
+	float* const art_learning_pro_sum, float* const computer_learning_pro_sum, float* const total_pro_sum, const int year, const int month) const {
 	using namespace std;
 	char year_buf[15];
 	char month_buf[15];
@@ -703,7 +719,7 @@ bool CSqliteUtils::get_pro_sum_by_month(float* const writing_pro_sum, float* con
 
 
 bool CSqliteUtils::get_pro_sum_by_year(float* const writing_pro_sum, float* const reading_pro_sum,
-	float* const art_learning_pro_sum, float* const computer_learning_pro, float* const total_pro_sum, const int year) {
+	float* const art_learning_pro_sum, float* const computer_learning_pro, float* const total_pro_sum, const int year) const {
 	using namespace std;
 	char year_buf[15];
 	_itoa(year, year_buf, 10);
@@ -764,7 +780,7 @@ bool CSqliteUtils::get_pro_sum_by_year(float* const writing_pro_sum, float* cons
 
 
 bool CSqliteUtils::get_pro_sum(float* const writing_pro_sum, float* const reading_pro_sum,
-	float* const art_learning_pro_sum, float* const computer_learning_pro, float* const total_pro_sum) {
+	float* const art_learning_pro_sum, float* const computer_learning_pro, float* const total_pro_sum) const {
 	using namespace std;
 	string sql = "select sum(writing_pro),sum(reading_pro),sum(art_learning_pro),sum(computer_science_tech_pro),sum(total_pro) from pro;";
 
@@ -821,7 +837,7 @@ bool CSqliteUtils::get_pro_sum(float* const writing_pro_sum, float* const readin
 }
 
 
-bool CSqliteUtils::check_if_pro_of_date_exist(std::wstring date) {
+bool CSqliteUtils::check_if_pro_of_date_exist(const std::wstring& date) const {
 	using namespace std;
 	wstring sql = L"select count(*) from pro where date='";
 	sql.append(date);
@@ -843,7 +859,7 @@ bool CSqliteUtils::check_if_pro_of_date_exist(std::wstring date) {
 }
 
 
-bool CSqliteUtils::get_pro(std::wstring date, CPro* pro) {
+bool CSqliteUtils::get_pro(const std::wstring& date, CPro* pro) const {
 	using namespace std;
 	wstring sql = L"select writing_pro,reading_pro,art_learning_pro,computer_science_tech_pro,note from pro where date='";
 	sql.append(date).append(L"';");
@@ -912,7 +928,7 @@ bool CSqliteUtils::get_pro(std::wstring date, CPro* pro) {
 }
 
 
-bool CSqliteUtils::count_pro_by_month(int* const num, const int year, const int month) {
+bool CSqliteUtils::count_pro_by_month(int* const num, const int year, const int month) const {
 	using namespace std;
 	char year_buf[15];
 	char month_buf[15];
@@ -950,7 +966,7 @@ bool CSqliteUtils::count_pro_by_month(int* const num, const int year, const int 
 }
 
 
-bool CSqliteUtils::count_pro_by_year(int* const num, const int year) {
+bool CSqliteUtils::count_pro_by_year(int* const num, const int year)  const {
 	using namespace std;
 	char year_buf[15];
 	_itoa(year, year_buf, 10);
@@ -978,7 +994,7 @@ bool CSqliteUtils::count_pro_by_year(int* const num, const int year) {
 }
 
 
-bool CSqliteUtils::count_pro(int* const num) {
+bool CSqliteUtils::count_pro(int* const num)  const {
 	using namespace std;
 	string sql = "select count(*) from pro;";
 
