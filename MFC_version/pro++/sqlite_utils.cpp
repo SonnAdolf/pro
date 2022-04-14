@@ -858,7 +858,38 @@ bool CSqliteUtils::check_if_pro_of_date_exist(const std::wstring& date) const {
 	return false;
 }
 
-
+bool CSqliteUtils::set_book_reviews_of_publisher(std::list<CBook>& book_reviews) const {
+	using namespace std;
+	std::list<CBook>::iterator book_review_inter;
+	for (book_review_inter = book_reviews.begin(); book_review_inter != book_reviews.end(); book_review_inter++)
+	{
+		wstring sql = L"select p.name from publisher p join book b on (b.id=";
+		sql += book_review_inter->get_id();
+		sql += L" and b.publisher_id=p.id);";
+		string str_sql;
+		wchar_to_string(str_sql, sql.c_str());
+		char* errmsg;
+		char** pResult;
+		int nRow, nCol;
+		if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+			cout << "sqlite : select data failed. error : " << errmsg << endl;
+			sqlite3_free(errmsg);
+			return false;
+		}
+		if (nRow == 0 || nCol == 0)
+			return false;
+		int nIndex = nCol;
+		std::wstring tmp_wstring;
+		std::string tmp_str;
+		if (pResult[nIndex] != NULL && strcmp(pResult[nIndex], "") != 0)
+		{
+			tmp_str = pResult[nIndex];
+			string_to_wstring(tmp_wstring, utf8_2_ascii(tmp_str));
+			book_review_inter->set_publisher(tmp_wstring);
+		}
+	}
+	return true;
+}
 bool CSqliteUtils::get_pro(const std::wstring& date, CPro* pro) const {
 	using namespace std;
 	wstring sql = L"select writing_pro,reading_pro,art_learning_pro,computer_science_tech_pro,note from pro where date='";
@@ -924,6 +955,184 @@ bool CSqliteUtils::get_pro(const std::wstring& date, CPro* pro) const {
 	CPro new_pro(writing_pro_num, art_learning_pro_num,reading_pro_num, computer_pro_num,wstr_note);
 	//Ç³¿½±´¼´¿É
 	*pro = new_pro;
+	return true;
+}
+bool CSqliteUtils::set_book_reviews_of_authors(std::list<CBook>& book_reviews) const {
+	using namespace std;
+	std::list<CBook>::iterator book_review_inter;
+	for (book_review_inter = book_reviews.begin(); book_review_inter != book_reviews.end(); book_review_inter++)
+	{
+		wstring sql = L"select a.name from author a join book_author b_a on (b_a.book_id=";
+		sql += book_review_inter->get_id();
+		sql += L" and a.id=b_a.author_id);";
+		string str_sql;
+		wchar_to_string(str_sql, sql.c_str());
+		char* errmsg;
+		char** pResult;
+		int nRow, nCol;
+		if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+			cout << "sqlite : select data failed. error : " << errmsg << endl;
+			sqlite3_free(errmsg);
+			return false;
+		}
+		if (nRow == 0 || nCol == 0)
+			return false;
+		int nIndex = nCol;
+		std::wstring tmp_wstring;
+		std::string tmp_str;
+		std::vector<std::wstring> authors;
+		for (int i = 0; i < nRow; i++)
+		{
+			if (pResult[nIndex] != NULL && strcmp(pResult[nIndex], "") != 0)
+			{
+				tmp_str = pResult[nIndex];
+				string_to_wstring(tmp_wstring, utf8_2_ascii(tmp_str));
+				authors.push_back(tmp_wstring);
+			}
+			nIndex += nCol;
+		}
+		book_review_inter->set_authors(authors);
+	}
+	return true;
+}
+bool CSqliteUtils::set_book_reviews_of_translators(std::list<CBook>& book_reviews) const {
+	using namespace std;
+	std::list<CBook>::iterator book_review_inter;
+	for (book_review_inter = book_reviews.begin(); book_review_inter != book_reviews.end(); book_review_inter++)
+	{
+		wstring sql = L"select t.name from translator t join book_translator b_t on (b_t.book_id=";
+		sql += book_review_inter->get_id();
+		sql += L" and b_t.translator_id = t.id);";
+		string str_sql;
+		wchar_to_string(str_sql, sql.c_str());
+		char* errmsg;
+		char** pResult;
+		int nRow, nCol;
+		if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+			cout << "sqlite : select data failed. error : " << errmsg << endl;
+			sqlite3_free(errmsg);
+			return false;
+		}
+		if (nRow == 0 || nCol == 0)
+			return true;
+		int nIndex = nCol;
+		std::wstring tmp_wstring;
+		std::string tmp_str;
+		std::vector<std::wstring> translators;
+		for (int i = 0; i < nRow; i++)
+		{
+			if (pResult[nIndex] != NULL && strcmp(pResult[nIndex], "") != 0)
+			{
+				tmp_str = pResult[nIndex];
+				string_to_wstring(tmp_wstring, utf8_2_ascii(tmp_str));
+				translators.push_back(tmp_wstring);
+			}
+			nIndex += nCol;
+		}
+		book_review_inter->set_translators(translators);
+	}
+	return true;
+}
+bool CSqliteUtils::get_book_reviews(std::list<CBook>& book_reviews) const {
+	using namespace std;
+	const wstring sql = L"select id,note,name,date,score,page_num,pub_year,publisher_id from book;";
+	string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	char* errmsg;
+	char** pResult;
+	int nRow, nCol;
+	if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : select data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return false;
+	}
+	if (nRow == 0 || nCol == 0)
+		return false;
+	int nIndex = nCol;
+	std::wstring tmp_wstring;
+	std::string tmp_str;
+	for (int i = 0; i < nRow; i++)
+	{
+		CBook tmp_book;
+		if (pResult[nIndex] == NULL || strcmp(pResult[nIndex], "") == 0)
+		{
+			tmp_book.set_id(L"0");
+		}
+		else
+		{
+			tmp_str = pResult[nIndex];
+			string_to_wstring(tmp_wstring, utf8_2_ascii(tmp_str));
+			tmp_book.set_id(tmp_wstring);
+		}
+		if (pResult[nIndex+1] == NULL || strcmp(pResult[nIndex+1], "") == 0)
+		{
+			tmp_book.set_note(L"");
+		}
+		else
+		{
+			tmp_str = pResult[nIndex+1];
+			string_to_wstring(tmp_wstring, utf8_2_ascii(tmp_str));
+			tmp_book.set_note(tmp_wstring);
+		}
+		if (pResult[nIndex + 2] == NULL || strcmp(pResult[nIndex + 2], "") == 0)
+		{
+			tmp_book.set_name(L"");
+		}
+		else
+		{
+			tmp_str = pResult[nIndex+2];
+			string_to_wstring(tmp_wstring, utf8_2_ascii(tmp_str));
+			tmp_book.set_name(tmp_wstring);
+		}
+		if (pResult[nIndex + 3] == NULL || strcmp(pResult[nIndex + 3], "") == 0)
+		{
+			tmp_book.set_review_date(L"");
+		}
+		else
+		{
+			tmp_str = pResult[nIndex+3];
+			string_to_wstring(tmp_wstring, utf8_2_ascii(tmp_str));
+			tmp_book.set_review_date(tmp_wstring);
+		}
+		if (pResult[nIndex + 4] == NULL || strcmp(pResult[nIndex + 4], "") == 0)
+		{
+			tmp_book.set_score(L"");
+		}
+		else
+		{
+			tmp_str = pResult[nIndex+4];
+			string_to_wstring(tmp_wstring, utf8_2_ascii(tmp_str));
+			tmp_book.set_score(tmp_wstring);
+		}
+		if (pResult[nIndex + 5] == NULL || strcmp(pResult[nIndex + 5], "") == 0)
+		{
+			tmp_book.set_page_num(L"");
+		}
+		else
+		{
+			tmp_str = pResult[nIndex+5];
+			string_to_wstring(tmp_wstring, utf8_2_ascii(tmp_str));
+			tmp_book.set_page_num(tmp_wstring);
+		}
+		if (pResult[nIndex + 6] == NULL || strcmp(pResult[nIndex + 6], "") == 0)
+		{
+			tmp_book.set_pub_year(L"");
+		}
+		else
+		{
+			tmp_str = pResult[nIndex+6];
+			string_to_wstring(tmp_wstring, utf8_2_ascii(tmp_str));
+			tmp_book.set_pub_year(tmp_wstring);
+		}
+		nIndex += nCol;
+		book_reviews.push_back(tmp_book);
+	}
+	if (!set_book_reviews_of_authors(book_reviews))
+		return false;
+	if (!set_book_reviews_of_translators(book_reviews))
+		return false;
+	if (!set_book_reviews_of_publisher(book_reviews))
+		return false;
 	return true;
 }
 

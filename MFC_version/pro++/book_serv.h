@@ -20,4 +20,5 @@ public:
 	int add_tag_book_relation(const std::wstring& tag_id, const std::wstring& book_id) const;
 	int add_author_book_relation(const std::wstring& author_id, const std::wstring& book_id) const;
 	int add_translator_book_relation(const std::wstring& translator_id, const std::wstring& book_id) const;
+	bool get_book_reviews(std::list<CBook>& book_reviews) const;
 };

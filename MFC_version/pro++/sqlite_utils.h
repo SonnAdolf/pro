@@ -7,6 +7,7 @@
 #include <list>
 #include <algorithm>
 #include "pro.h"
+#include "book.h"
 
 
 class CSqliteUtils {
@@ -108,6 +109,10 @@ public:
 
 	bool get_pro(const std::wstring& date, CPro* pro) const;
 
+	bool get_book_reviews(std::list<CBook>& book_reviews) const;
+	bool set_book_reviews_of_authors(std::list<CBook>& book_reviews) const;
+	bool set_book_reviews_of_translators(std::list<CBook>& book_reviews) const;
+	bool set_book_reviews_of_publisher(std::list<CBook>& book_reviews) const;
 
 	bool get_pro_sum(float* const writing_pro_sum, float* const reading_pro_sum,
 		float* const art_learning_pro_sum, float* const computer_learning_pro, float* const total_pro_sum) const;

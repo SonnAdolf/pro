@@ -39,3 +39,7 @@ int CBookServ::add_book_review_ret_id(const std::wstring& name, const std::wstri
 int CBookServ::add_publisher_ret_id(const std::wstring& name) const {
 	return CSqliteUtils::get_inst().add_publisher_ret_id(name);
 }
+
+bool CBookServ::get_book_reviews(std::list<CBook>& book_reviews) const {
+	return CSqliteUtils::get_inst().get_book_reviews(book_reviews);
+}

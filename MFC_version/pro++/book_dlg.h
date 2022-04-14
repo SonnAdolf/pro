@@ -26,4 +26,11 @@ public:
 	afx_msg void on_book_add_btn_clicked();
 private:
 	CBookAddDlg m_book_add_dlg;
+public:
+	afx_msg void on_bn_clicked_search_book_button();
+private:
+	void init_list_control();
+private:
+	CListCtrl m_booklist_ctrl;
+	const int BOOK_LIST_COL_NUM;
 };

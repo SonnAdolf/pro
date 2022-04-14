@@ -191,6 +191,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="book.h" />
     <ClInclude Include="book_add_dlg.h" />
     <ClInclude Include="book_dlg.h" />
     <ClInclude Include="book_serv.h" />
@@ -211,6 +212,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="book.cpp" />
     <ClCompile Include="book_add_dlg.cpp" />
     <ClCompile Include="book_dlg.cpp" />
     <ClCompile Include="book_serv.cpp" />
