@@ -30,9 +30,26 @@ int CBookServ::add_author_book_relation(const std::wstring& author_id, const std
 int CBookServ::add_translator_book_relation(const std::wstring& translator_id, const std::wstring& book_id) const {
 	return CSqliteUtils::get_inst().add_translator_book_relation(translator_id, book_id);
 }
+
+int CBookServ::del_tag_book_relation(const std::wstring& book_id) const {
+	return CSqliteUtils::get_inst().del_tag_book_relation( book_id);
+}
+int CBookServ::del_author_book_relation(const std::wstring& book_id) const {
+	return CSqliteUtils::get_inst().del_author_book_relation( book_id);
+}
+int CBookServ::del_translator_book_relation( const std::wstring& book_id) const {
+	return CSqliteUtils::get_inst().del_translator_book_relation( book_id);
+}
+
 int CBookServ::add_book_review_ret_id(const std::wstring& name, const std::wstring& score,
 	const std::wstring& publisher_id, const std::wstring& note, const std::wstring& page_num, const std::wstring& date, const std::wstring& pub_year) const {
 	return CSqliteUtils::get_inst().add_book_review_ret_id(name, score,
+		publisher_id, note, page_num, date, pub_year);
+}
+
+int CBookServ::edit_book_review(const std::wstring& id, const std::wstring& name, const std::wstring& score,
+	const std::wstring& publisher_id, const std::wstring& note, const std::wstring& page_num, const std::wstring& date, const std::wstring& pub_year) const {
+	return CSqliteUtils::get_inst().edit_book_review(id, name, score,
 		publisher_id, note, page_num, date, pub_year);
 }
 

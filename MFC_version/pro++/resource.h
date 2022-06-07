@@ -9,6 +9,7 @@
 #define IDD_PRO_SEARCH_DIALOG           134
 #define IDD_BOOK_DIALOG                 136
 #define IDD_BOOK_ADD_DIALOG             138
+#define IDD_BOOK_EDIT_DIALOG            139
 #define IDC_CHECK1                      1001
 #define IDC_PRO_TODAY_BTN               1002
 #define IDC_BUTTON2                     1003
@@ -58,7 +59,8 @@
 #define IDC_BOOK_DATE_DATETIMEPICKER    1033
 #define IDC_BOOK_LIST                   1035
 #define IDC_SEARCH_BOOK_BUTTON          1036
-#define IDC_LIST2                       1037
+#define IDC_EDIT_BUTTON                 1038
+#define ID_BOOK_EDIT                    1039
 
 // Next default values for new objects
 // 
@@ -66,7 +68,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        140
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1038
+#define _APS_NEXT_CONTROL_VALUE         1040
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

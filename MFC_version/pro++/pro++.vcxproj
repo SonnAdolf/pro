@@ -194,8 +194,12 @@
     <ClInclude Include="book.h" />
     <ClInclude Include="book_add_dlg.h" />
     <ClInclude Include="book_dlg.h" />
+    <ClInclude Include="book_edit_dlg.h" />
     <ClInclude Include="book_serv.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="movie.h" />
+    <ClInclude Include="movie_add_dlg.h" />
+    <ClInclude Include="movie_dlg.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="pro++.h" />
     <ClInclude Include="pro++_dlg.h" />
@@ -215,7 +219,11 @@
     <ClCompile Include="book.cpp" />
     <ClCompile Include="book_add_dlg.cpp" />
     <ClCompile Include="book_dlg.cpp" />
+    <ClCompile Include="book_edit_dlg.cpp" />
     <ClCompile Include="book_serv.cpp" />
+    <ClCompile Include="movie.cpp" />
+    <ClCompile Include="movie_add_dlg.cpp" />
+    <ClCompile Include="movie_dlg.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

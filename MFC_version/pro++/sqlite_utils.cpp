@@ -515,6 +515,64 @@ int CSqliteUtils::add_translator_ret_id(const std::wstring& name) const {
 	}
 	return get_last_insert_translator_id();
 }
+int CSqliteUtils::del_tag_book_relation(const std::wstring& book_id) const {
+	using namespace std;
+
+	wstring sql = L"delete from book_tag where book_id=";
+	sql.append(book_id).append(L";");
+
+	std::string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	// sqlite使用utf-8编码，汉字需要转
+	string str_utf8_sql = ascii_2_utf8(str_sql);
+
+	char* errmsg;
+	if (sqlite3_exec(m_db, str_utf8_sql.c_str(), NULL, NULL, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : insert data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return -1;
+	}
+	return 0;
+}
+
+int CSqliteUtils::del_author_book_relation(const std::wstring& book_id) const {
+	using namespace std;
+
+	wstring sql = L"delete from book_author where book_id=";
+	sql.append(book_id).append(L";");
+
+	std::string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	// sqlite使用utf-8编码，汉字需要转
+	string str_utf8_sql = ascii_2_utf8(str_sql);
+
+	char* errmsg;
+	if (sqlite3_exec(m_db, str_utf8_sql.c_str(), NULL, NULL, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : insert data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return -1;
+	}
+	return 0;
+}
+int CSqliteUtils::del_translator_book_relation(const std::wstring& book_id) const {
+	using namespace std;
+
+	wstring sql = L"delete from book_translator where book_id=";
+	sql.append(book_id).append(L";");
+
+	std::string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	// sqlite使用utf-8编码，汉字需要转
+	string str_utf8_sql = ascii_2_utf8(str_sql);
+
+	char* errmsg;
+	if (sqlite3_exec(m_db, str_utf8_sql.c_str(), NULL, NULL, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : insert data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return -1;
+	}
+	return 0;
+}
 int CSqliteUtils::add_tag_book_relation(const std::wstring& tag_id, const std::wstring& book_id) const {
 	using namespace std;
 
@@ -619,6 +677,29 @@ int CSqliteUtils::add_book_review_ret_id(const std::wstring& name, const std::ws
 	return get_last_insert_publisher_id();
 }
 
+
+int CSqliteUtils::edit_book_review(const std::wstring& id,const std::wstring& name, const std::wstring& score,
+	const std::wstring& publisher_id, const std::wstring& note, const std::wstring& page_num, const std::wstring& date, const std::wstring& pub_year) const {
+	using namespace std;
+
+	wstring sql = L"update book set note = '";
+	sql.append(note).append(L"', name = '").append(name).append(L"', date='").append(date).append(L"', score=")
+		.append(score).append(L", page_num=").append(page_num).append(L", pub_year=").append(pub_year)
+		.append(L",publisher_id=").append(publisher_id).append(L" where id=").append(id).append(L";");
+
+	std::string str_sql;
+	wchar_to_string(str_sql, sql.c_str());
+	// sqlite使用utf-8编码，汉字需要转
+	string str_utf8_sql = ascii_2_utf8(str_sql);
+
+	char* errmsg;
+	if (sqlite3_exec(m_db, str_utf8_sql.c_str(), NULL, NULL, &errmsg) != SQLITE_OK) {
+		cout << "sqlite : insert data failed. error : " << errmsg << endl;
+		sqlite3_free(errmsg);
+		return -1;
+	}
+	return 0;
+}
 
 
 bool CSqliteUtils::update_pro(CPro pro, const std::wstring& date) const {
@@ -858,7 +939,7 @@ bool CSqliteUtils::check_if_pro_of_date_exist(const std::wstring& date) const {
 	return false;
 }
 
-bool CSqliteUtils::set_book_reviews_of_publisher(std::list<CBook>& book_reviews) const {
+bool CSqliteUtils::get_book_reviews_of_publisher(std::list<CBook>& book_reviews) const {
 	using namespace std;
 	std::list<CBook>::iterator book_review_inter;
 	for (book_review_inter = book_reviews.begin(); book_review_inter != book_reviews.end(); book_review_inter++)
@@ -887,6 +968,44 @@ bool CSqliteUtils::set_book_reviews_of_publisher(std::list<CBook>& book_reviews)
 			string_to_wstring(tmp_wstring, utf8_2_ascii(tmp_str));
 			book_review_inter->set_publisher(tmp_wstring);
 		}
+	}
+	return true;
+}
+bool CSqliteUtils::get_book_reviews_of_tags(std::list<CBook>& book_reviews) const {
+	using namespace std;
+	std::list<CBook>::iterator book_review_inter;
+	for (book_review_inter = book_reviews.begin(); book_review_inter != book_reviews.end(); book_review_inter++)
+	{
+		wstring sql = L"select t.name from tag t join book_tag b_t on (b_t.book_id=";
+		sql += book_review_inter->get_id();
+		sql += L" and t.id=b_t.tag_id);";
+		string str_sql;
+		wchar_to_string(str_sql, sql.c_str());
+		char* errmsg;
+		char** pResult;
+		int nRow, nCol;
+		if (sqlite3_get_table(m_db, str_sql.c_str(), &pResult, &nRow, &nCol, &errmsg) != SQLITE_OK) {
+			cout << "sqlite : select data failed. error : " << errmsg << endl;
+			sqlite3_free(errmsg);
+			return false;
+		}
+		if (nRow == 0 || nCol == 0)
+			return false;
+		int nIndex = nCol;
+		std::wstring tmp_wstring;
+		std::string tmp_str;
+		std::vector<std::wstring> tags;
+		for (int i = 0; i < nRow; i++)
+		{
+			if (pResult[nIndex] != NULL && strcmp(pResult[nIndex], "") != 0)
+			{
+				tmp_str = pResult[nIndex];
+				string_to_wstring(tmp_wstring, utf8_2_ascii(tmp_str));
+				tags.push_back(tmp_wstring);
+			}
+			nIndex += nCol;
+		}
+		book_review_inter->set_tags(tags);
 	}
 	return true;
 }
@@ -957,7 +1076,7 @@ bool CSqliteUtils::get_pro(const std::wstring& date, CPro* pro) const {
 	*pro = new_pro;
 	return true;
 }
-bool CSqliteUtils::set_book_reviews_of_authors(std::list<CBook>& book_reviews) const {
+bool CSqliteUtils::get_book_reviews_of_authors(std::list<CBook>& book_reviews) const {
 	using namespace std;
 	std::list<CBook>::iterator book_review_inter;
 	for (book_review_inter = book_reviews.begin(); book_review_inter != book_reviews.end(); book_review_inter++)
@@ -995,7 +1114,7 @@ bool CSqliteUtils::set_book_reviews_of_authors(std::list<CBook>& book_reviews) c
 	}
 	return true;
 }
-bool CSqliteUtils::set_book_reviews_of_translators(std::list<CBook>& book_reviews) const {
+bool CSqliteUtils::get_book_reviews_of_translators(std::list<CBook>& book_reviews) const {
 	using namespace std;
 	std::list<CBook>::iterator book_review_inter;
 	for (book_review_inter = book_reviews.begin(); book_review_inter != book_reviews.end(); book_review_inter++)
@@ -1127,11 +1246,13 @@ bool CSqliteUtils::get_book_reviews(std::list<CBook>& book_reviews) const {
 		nIndex += nCol;
 		book_reviews.push_back(tmp_book);
 	}
-	if (!set_book_reviews_of_authors(book_reviews))
+	if (!get_book_reviews_of_authors(book_reviews))
 		return false;
-	if (!set_book_reviews_of_translators(book_reviews))
+	if (!get_book_reviews_of_translators(book_reviews))
 		return false;
-	if (!set_book_reviews_of_publisher(book_reviews))
+	if (!get_book_reviews_of_publisher(book_reviews))
+		return false;
+	if (!get_book_reviews_of_tags(book_reviews))
 		return false;
 	return true;
 }

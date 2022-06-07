@@ -46,21 +46,6 @@ void CBookDlg::init_list_control()
 	m_booklist_ctrl.InsertColumn(5, _T("Number of pages"), LVCFMT_CENTER, rect.Width() / BOOK_LIST_COL_NUM, 5);
 	m_booklist_ctrl.InsertColumn(6, _T("My score"), LVCFMT_CENTER, rect.Width() / BOOK_LIST_COL_NUM, 6);
 	m_booklist_ctrl.InsertColumn(7, _T("Date of review"), LVCFMT_CENTER, rect.Width() / BOOK_LIST_COL_NUM, 7);
-
-	// 在列表视图控件中插入列表项，并设置列表子项文本   
-	//m_booklist_ctrl.InsertItem(0, _T("Java"));
-	//m_booklist_ctrl.SetItemText(0, 1, _T("1"));
-	//m_booklist_ctrl.SetItemText(0, 2, _T("1"));
-	//m_booklist_ctrl.InsertItem(1, _T("C"));
-	//m_booklist_ctrl.SetItemText(1, 1, _T("2"));
-	//m_booklist_ctrl.SetItemText(1, 2, _T("2"));
-	//m_booklist_ctrl.InsertItem(2, _T("C#"));
-	//m_booklist_ctrl.SetItemText(2, 1, _T("3"));
-	//m_booklist_ctrl.SetItemText(2, 2, _T("6"));
-	//m_booklist_ctrl.InsertItem(3, _T("C++"));
-	//m_booklist_ctrl.SetItemText(3, 1, _T("4"));
-	//m_booklist_ctrl.SetItemText(3, 2, _T("3"));
-
 }
 
 BOOL CBookDlg::OnInitDialog()
@@ -71,6 +56,7 @@ BOOL CBookDlg::OnInitDialog()
 	/*set small icon*/
 	SetIcon(AfxGetApp()->LoadIcon(IDR_MAINFRAME), FALSE);
 	m_book_add_dlg.Create(CBookAddDlg::IDD, this);
+	m_book_edit_dlg.Create(CBookEditDlg::IDD, this);
 	//m_date_ctrl.SetFormat(L"yyyy-MM-dd");
 	init_list_control();
 
@@ -80,22 +66,16 @@ BOOL CBookDlg::OnInitDialog()
 
 void CBookDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);/*
-								   DDX_Control(pDX, IDC_PRO_WRITING_EDIT, m_pro_writing_edit);
-								   DDX_Control(pDX, IDC_PRO_READING_EDIT, m_pro_reading_edit);
-								   DDX_Control(pDX, IDC_PRO_ART_LEARNING_EDIT, m_pro_art_learning_edit);
-								   DDX_Control(pDX, IDC_NOTE_EDIT, m_note_edit);
-								   DDX_Control(pDX, IDC_DATETIMEPICKER1, m_date_ctrl);
-								   DDX_Control(pDX, IDC_PRO_COMPUTER_EDIT, m_pro_computer_edit);*/
+	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_BOOK_LIST, m_booklist_ctrl);
 }
 
 
 BEGIN_MESSAGE_MAP(CBookDlg, CDialogEx)
 	ON_WM_PAINT()
-	//ON_BN_CLICKED(IDC_INPT_TODAY_PRO_BTN, &CProTodayDlg::on_clicked_inpt_today_pro_btn)
 	ON_BN_CLICKED(IDC_ADD_BOOK_BUTTON, &CBookDlg::on_book_add_btn_clicked)
 	ON_BN_CLICKED(IDC_SEARCH_BOOK_BUTTON, &CBookDlg::on_bn_clicked_search_book_button)
+	ON_BN_CLICKED(IDC_EDIT_BUTTON, &CBookDlg::on_bn_clicked_edit_button)
 END_MESSAGE_MAP()
 
 
@@ -109,15 +89,14 @@ void CBookDlg::on_book_add_btn_clicked()
 
 void CBookDlg::on_bn_clicked_search_book_button()
 {
-	this->m_booklist_ctrl.DeleteAllItems();
-	std::list<CBook> book_review_list;
-	CBookServ::get_inst().get_book_reviews(book_review_list);
+	bool ret = this->m_booklist_ctrl.DeleteAllItems();
+	CBookServ::get_inst().get_book_reviews(m_book_review_list);
 	m_booklist_ctrl.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 	std::list<CBook>::iterator book_review_inter;
-
-	for (book_review_inter = book_review_list.begin(); book_review_inter != book_review_list.end(); book_review_inter++)
+	int n_row = 0;
+	for (book_review_inter = m_book_review_list.begin(); book_review_inter != m_book_review_list.end(); book_review_inter++)
 	{
-		int n_row = m_booklist_ctrl.InsertItem(0, book_review_inter->get_name().c_str());
+		m_booklist_ctrl.InsertItem(n_row, book_review_inter->get_name().c_str());
 		if (book_review_inter->get_authors().size() > 0)
 		{
 			std::wstring author_strs = book_review_inter->get_authors()[0];
@@ -143,5 +122,30 @@ void CBookDlg::on_bn_clicked_search_book_button()
 		m_booklist_ctrl.SetItemText(n_row, 5, book_review_inter->get_page_num().c_str());
 		m_booklist_ctrl.SetItemText(n_row, 6, book_review_inter->get_score().c_str());
 		m_booklist_ctrl.SetItemText(n_row, 7, book_review_inter->get_review_date().c_str());
+		n_row++;
 	}
+}
+
+
+void CBookDlg::on_bn_clicked_edit_button()
+{
+	if (m_booklist_ctrl.GetItemCount() == 0
+		|| m_booklist_ctrl.GetSelectedCount()<1)
+	{
+		return;
+	}
+	m_book_edit_dlg.ShowWindow(SW_SHOW);
+
+	int distance ;
+	POSITION pos = m_booklist_ctrl.GetFirstSelectedItemPosition();
+	if (pos == NULL)
+		return;
+	else
+	{
+		distance = m_booklist_ctrl.GetNextSelectedItem(pos);
+	}
+	std::list<CBook>::iterator it;
+	it = m_book_review_list.begin();
+	std::advance(it, distance);
+	m_book_edit_dlg.book_inf_show(*it);
 }

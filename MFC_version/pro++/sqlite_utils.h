@@ -83,6 +83,10 @@ public:
 
 	int add_translator_ret_id(const std::wstring& name) const;
 
+	int del_tag_book_relation(const std::wstring& book_id) const;
+	int del_author_book_relation(const std::wstring& book_id) const;
+	int del_translator_book_relation(const std::wstring& book_id) const;
+
 	int add_tag_book_relation(const std::wstring& tag_id, const std::wstring& book_id) const;
 
 	int add_author_book_relation(const std::wstring& author_id, const std::wstring& book_id) const;
@@ -91,6 +95,9 @@ public:
 	int add_publisher_ret_id(const std::wstring& name) const;
 
 	int add_book_review_ret_id(const std::wstring&, const std::wstring& score,
+		const std::wstring& publisher_id, const std::wstring& note, const std::wstring& page_num, const std::wstring& date, const std::wstring& pub_year) const;
+
+	int edit_book_review(const std::wstring& id, const std::wstring& name, const std::wstring& score,
 		const std::wstring& publisher_id, const std::wstring& note, const std::wstring& page_num, const std::wstring& date, const std::wstring& pub_year) const;
 
 	bool get_pro_sum_by_month(float* const writing_pro_sum, float* const reading_pro_sum,
@@ -110,9 +117,10 @@ public:
 	bool get_pro(const std::wstring& date, CPro* pro) const;
 
 	bool get_book_reviews(std::list<CBook>& book_reviews) const;
-	bool set_book_reviews_of_authors(std::list<CBook>& book_reviews) const;
-	bool set_book_reviews_of_translators(std::list<CBook>& book_reviews) const;
-	bool set_book_reviews_of_publisher(std::list<CBook>& book_reviews) const;
+	bool get_book_reviews_of_authors(std::list<CBook>& book_reviews) const;
+	bool get_book_reviews_of_translators(std::list<CBook>& book_reviews) const;
+	bool get_book_reviews_of_publisher(std::list<CBook>& book_reviews) const;
+	bool get_book_reviews_of_tags(std::list<CBook>& book_reviews) const;
 
 	bool get_pro_sum(float* const writing_pro_sum, float* const reading_pro_sum,
 		float* const art_learning_pro_sum, float* const computer_learning_pro, float* const total_pro_sum) const;

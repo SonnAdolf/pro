@@ -1,0 +1,16 @@
+﻿  book_edit_dlg.cpp
+D:\Workspace\pro++\MFC_version\pro++\book_edit_dlg.cpp(96,11): warning C4018: “<”: 有符号/无符号不匹配
+D:\Workspace\pro++\MFC_version\pro++\book_edit_dlg.cpp(104,14): warning C4018: “<”: 有符号/无符号不匹配
+D:\Workspace\pro++\MFC_version\pro++\book_edit_dlg.cpp(112,14): warning C4018: “<”: 有符号/无符号不匹配
+D:\Workspace\pro++\MFC_version\pro++\book_edit_dlg.cpp(142,20): warning C4018: “<”: 有符号/无符号不匹配
+D:\Workspace\pro++\MFC_version\pro++\book_edit_dlg.cpp(155,20): warning C4018: “<”: 有符号/无符号不匹配
+D:\Workspace\pro++\MFC_version\pro++\book_edit_dlg.cpp(167,20): warning C4018: “<”: 有符号/无符号不匹配
+D:\Workspace\pro++\MFC_version\pro++\book_edit_dlg.cpp(222,20): warning C4018: “<”: 有符号/无符号不匹配
+D:\Workspace\pro++\MFC_version\pro++\book_edit_dlg.cpp(228,20): warning C4018: “<”: 有符号/无符号不匹配
+D:\Workspace\pro++\MFC_version\pro++\book_edit_dlg.cpp(234,20): warning C4018: “<”: 有符号/无符号不匹配
+  sqlite3.lib(sqlite3.obj) : 找到 MSIL .netmodule 或使用 /GL 编译的模块；正在使用 /LTCG 重新启动链接；将 /LTCG 添加到链接命令行以改进链接器性能
+LINK : warning LNK4075: 忽略“/INCREMENTAL”(由于“/LTCG”规范)
+LIBCMTD.lib(initializers.obj) : warning LNK4098: 默认库“libcmt.lib”与其他库的使用冲突；请使用 /NODEFAULTLIB:library
+  正在生成代码
+  已完成代码的生成
+  pro++.vcxproj -> D:\Workspace\pro++\MFC_version\Debug\pro++.exe
