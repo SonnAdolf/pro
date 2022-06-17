@@ -46,6 +46,18 @@ bool CSqliteUtils::create_tables() {
 		CREATE TABLE IF NOT EXISTS book_tag(id integer primary key autoincrement,book_id integer references book(id),tag_id integer references tag(id));\
 		CREATE TABLE IF NOT EXISTS book_author(id integer primary key autoincrement, book_id integer references book(id), author_id integer references author(id));\
 		CREATE TABLE IF NOT EXISTS book_translator(id integer primary key autoincrement, book_id integer references book(id), translator_id integer references translator(id));\
+		CREATE TABLE IF NOT EXISTS movie(id integer primary key autoincrement,note varchar(900),name varchar(50) not null,country varchar(50),date date not null,score integer check(-1<score and score<101) not null,pub_year integer check(pub_year>1800 and pub_year<3000));\
+		CREATE TABLE IF NOT EXISTS director(id integer primary key autoincrement, name varchar(30));\
+		CREATE TABLE IF NOT EXISTS main_actor(id integer primary key autoincrement, name varchar(30));\
+		CREATE TABLE IF NOT EXISTS writer(id integer primary key autoincrement, name varchar(30));\
+		CREATE TABLE IF NOT EXISTS music_department(id integer primary key autoincrement, name varchar(30)); \
+		CREATE TABLE IF NOT EXISTS camera_department(id integer primary key autoincrement, name varchar(30)); \
+		CREATE TABLE IF NOT EXISTS movie_tag(id integer primary key autoincrement,movie_id integer references movie(id),tag_id integer references tag(id));\
+		CREATE TABLE IF NOT EXISTS movie_director(id integer primary key autoincrement,movie_id integer references movie(id),director_id integer references director(id));\
+		CREATE TABLE IF NOT EXISTS movie_actor(id integer primary key autoincrement, movie_id integer references movie(id), actor_id integer references main_actor(id));\
+		CREATE TABLE IF NOT EXISTS movie_writer(id integer primary key autoincrement, movie_id integer references movie(id), writer_id integer references writer(id));\
+		CREATE TABLE IF NOT EXISTS movie_music_department(id integer primary key autoincrement, movie_id integer references movie(id), music_department_id integer references music_department(id));\
+		CREATE TABLE IF NOT EXISTS movie_camera_department(id integer primary key autoincrement, movie_id integer references movie(id), camera_department_id integer references camera_department(id));\
 		";
 	//CREATE TABLE IF NOT EXISTS movie(id integer primary key autoincrement, note varchar(900), name varchar(50), date date not null, score integer check(-1 < score and score < 101)); \
 	//CREATE TABLE IF NOT EXISTS game(id integer primary key autoincrement, note varchar(900), name varchar(50), date date not null, score integer check(-1 < score and score < 101));

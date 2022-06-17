@@ -90,6 +90,7 @@ void CBookDlg::on_book_add_btn_clicked()
 void CBookDlg::on_bn_clicked_search_book_button()
 {
 	bool ret = this->m_booklist_ctrl.DeleteAllItems();
+	m_book_review_list.clear();
 	CBookServ::get_inst().get_book_reviews(m_book_review_list);
 	m_booklist_ctrl.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 	std::list<CBook>::iterator book_review_inter;

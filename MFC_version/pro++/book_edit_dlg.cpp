@@ -109,11 +109,14 @@ void CBookEditDlg::book_inf_show(CBook book)
 	SetDlgItemText(IDC_BOOK_AUTHOR_EDIT, str_authors.c_str());
 
 	std::wstring str_translators = L"";
-	for (i=0; i < book.get_translators().size() - 1; i++)
+	if (book.get_translators().size() > 0)
 	{
-		str_translators.append(book.get_translators().at(i)).append(L"_");
+		for (i = 0; i < book.get_translators().size() - 1; i++)
+		{
+			str_translators.append(book.get_translators().at(i)).append(L"_");
+		}
+		str_translators.append(book.get_translators().at(i));
 	}
-	str_translators.append(book.get_translators().at(i));
 	SetDlgItemText(IDC_BOOK_TRANSLATOR_EDIT, str_translators.c_str());
 }
 
